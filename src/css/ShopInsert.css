@@ -1,0 +1,62 @@
+.shopInsert {
+  display: flex;
+  flex-direction: column;
+  padding: 150px;
+  align-items: center;
+}
+
+.shopInsertForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 3px 4px 10px gray;
+  width: 60%;
+  max-width: 600px;
+  min-width: 450px;
+}
+
+.shopInsertFormItem {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.shopInsertFormItem>label {
+  width: 160px;
+  font-size: large;
+}
+
+.shopInsertForm input {
+  border: none;
+  border-bottom: 1px solid gray;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.shopInsertFormItem .timeInput {
+  width: 47%;
+}
+
+.shopInsertButtonContainer {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.shopInsertButton {
+  padding: 10px 50px;
+  border-radius: 10px;
+  font-size: larger;
+}
+
+.shopInsertBack {
+  background-color: #d5e5f3;
+  border: none;
+}
+
+.shopInsertSubmit {
+  background-color: #2d9cdb;
+  border: none;
+}
