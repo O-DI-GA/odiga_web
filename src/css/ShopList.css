@@ -1,0 +1,30 @@
+.shopListTitle {
+  text-align: center;
+  padding: 30px;
+}
+
+.shopList {
+  display: flex;
+  gap: 10px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  width: 80%;
+}
+
+.shopItem {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  align-items: center;
+  min-width: 180px;
+}
+
+.shopInfo {
+  flex: 1;
+}
+
+.shopInfo p {
+  margin-bottom: 2px;
+}
