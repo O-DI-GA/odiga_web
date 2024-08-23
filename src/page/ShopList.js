@@ -52,8 +52,11 @@ const ShopList = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <h1 className="shopListTitle">내 가게 목록</h1>
+      <a href="/shopinsert" className="addShop">
+        + 가게 추가
+      </a>
       {shops.length === 0 ? (
         <p>등록된 가게가 없습니다.</p>
       ) : (
