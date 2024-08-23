@@ -7,15 +7,15 @@ export const postLogin = async (userInfo, dispatch) => {
     try {
         const response = await userInstance.post('/login', userInfo);
         if (response.status === 200) {
-            // 학번, 이름, accessToken store에 저장
-            const { studentName, accessToken } = response.data.data;
-            dispatch(SET_USER({ studentName }));
+            // 이름 accessToken store에 저장
+            const { ownerName, accessToken } = response.data.data;
+            dispatch(SET_USER({ ownerName }));
             dispatch(SET_TOKEN({ accessToken }));
         }
         return true;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            alert('학번 또는 비밀번호가 일치하지 않습니다.');
+            alert('아이디 또는 비밀번호가 일치하지 않습니다.');
         }
         return false;
     }
