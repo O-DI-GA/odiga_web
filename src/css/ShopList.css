@@ -25,6 +25,13 @@
   flex: 1;
 }
 
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 150px;
+}
+
 .shopInfo p {
   margin-bottom: 2px;
 }

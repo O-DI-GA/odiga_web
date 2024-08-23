@@ -30,7 +30,7 @@ const ShopList = () => {
     },
     {
       storeId: 4,
-      storeName: "shop4",
+      storeName: "엄청 긴 가게 이름이름이름의르이ㅡ밍리을이믬의으미을미",
       address: "add",
       phoneNumber: "123456789",
       reviewCount: 1,
@@ -39,7 +39,7 @@ const ShopList = () => {
     {
       storeId: 5,
       storeName: "shop5",
-      address: "add",
+      address: "대구광역시 ㅇ구 ㅇㅇ동 어쩌구 저쩌구 긴 주소",
       phoneNumber: "123456789",
       reviewCount: 1,
       storeCategory: "한식",
@@ -64,7 +64,7 @@ const ShopList = () => {
                 <h2 className="ellipsis" style={{ marginBottom: "10px" }}>
                   {shop.storeName}
                 </h2>
-                <p>{shop.address}</p>
+                <p className="ellipsis">{shop.address}</p>
                 <p>{shop.phoneNumber}</p>
                 <p>리뷰 {shop.reviewCount}개</p>
                 <p>{shop.storeCategory || "카테고리 없음"}</p>
