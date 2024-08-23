@@ -6,6 +6,8 @@ import MenuInsert from "./page/MenuInsert";
 import ShopList from "./page/ShopList";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+export const URL = "http://13.125.83.255:8080";
+
 function App() {
   return (
     <BrowserRouter>
