@@ -1,0 +1,53 @@
+.shopListTitle {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.shopList {
+  display: flex;
+  gap: 10px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  width: 80%;
+  margin-top: 80px;
+  clear: both;
+}
+
+.shopItem {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  align-items: center;
+  min-width: 180px;
+}
+
+.addShop {
+  position: relative;
+  float: right;
+  text-decoration: none;
+  color: black;
+  background-color: #D5E5F3;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  margin-right: 10%;
+  min-width: 100px;
+  cursor: pointer;
+}
+
+.shopInfo {
+  flex: 1;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 150px;
+}
+
+.shopInfo p {
+  margin-bottom: 2px;
+}
