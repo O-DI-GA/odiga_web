@@ -1,52 +1,37 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "../css/ShopList.css";
+import axios from "axios";
+import { URL } from "../App.js";
+import { useAccessToken } from "../store/useStore.js";
 
 const ShopList = () => {
-  const [shops, setShops] = useState([
-    {
-      storeId: 1,
-      storeName: "odiga",
-      address: "odegano",
-      phoneNumber: "123456789",
-      reviewCount: 0,
-      storeCategory: null,
-    },
-    {
-      storeId: 2,
-      storeName: "shop2",
-      address: "add",
-      phoneNumber: "123456789",
-      reviewCount: 1,
-      storeCategory: "한식",
-    },
-    {
-      storeId: 3,
-      storeName: "shop3",
-      address: "add",
-      phoneNumber: "123456789",
-      reviewCount: 1,
-      storeCategory: "한식",
-    },
-    {
-      storeId: 4,
-      storeName: "엄청 긴 가게 이름이름이름의르이ㅡ밍리을이믬의으미을미",
-      address: "add",
-      phoneNumber: "123456789",
-      reviewCount: 1,
-      storeCategory: "한식",
-    },
-    {
-      storeId: 5,
-      storeName: "shop5",
-      address: "대구광역시 ㅇ구 ㅇㅇ동 어쩌구 저쩌구 긴 주소",
-      phoneNumber: "123456789",
-      reviewCount: 1,
-      storeCategory: "한식",
-    },
-  ]);
+  const [shops, setShops] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const token = useAccessToken().accessToken;
+
+  useEffect(() => {
+    axios
+      .get(`${URL}/api/v1/owner/store`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.httpStatusCode === 200) {
+          setShops(response.data.data);
+        } else {
+          setError("Failed to fetch shops.");
+        }
+      })
+      .catch((error) => {
+        setError("Error fetching data: " + error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
