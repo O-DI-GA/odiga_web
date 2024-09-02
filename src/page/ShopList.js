@@ -3,10 +3,13 @@ import "../css/ShopList.css";
 import axios from "axios";
 import { URL } from "../App.js";
 import { useAccessToken } from "../store/useStore.js";
+import { useNavigate } from "react-router-dom";
 
 const ShopList = () => {
+  const navigate = useNavigate();
+
   const [shops, setShops] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const token = useAccessToken().accessToken;
@@ -31,7 +34,11 @@ const ShopList = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [token]);
+
+  const handleShopClick = (storeId) => {
+    navigate(`/menuinsert/${storeId}`);
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -47,7 +54,11 @@ const ShopList = () => {
       ) : (
         <div className="shopList">
           {shops.map((shop) => (
-            <div key={shop.storeId} className="shopItem">
+            <div
+              key={shop.storeId}
+              className="shopItem"
+              onClick={() => handleShopClick(shop.storeId)}
+            >
               <div className="shopInfo">
                 <h2 className="ellipsis" style={{ marginBottom: "10px" }}>
                   {shop.storeName}
