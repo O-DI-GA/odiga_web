@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 // 부트스트랩 import
 import "bootstrap/dist/css/bootstrap.css";
@@ -19,8 +20,7 @@ export default function CategoryMenuList() {
   const accessToken = useAccessToken().accessToken;
 
   // storeId 설정
-  //const storeId = React.useParams().id; // url 파마리터로 가져오기
-  const storeId = "1"; // storeId를 1로 설정
+  const { id: storeId } = useParams();
 
   // 카테고리 설정
   const [categoryList, setCategoryList] = React.useState([]);
