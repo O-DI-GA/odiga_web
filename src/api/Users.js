@@ -76,7 +76,6 @@ export const postWithFileData = async (url, token, data) => {
       url: url,
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
         "Content-Type": "multipart/form-data",
       },
       data: data,
