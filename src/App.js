@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/login" Component={Login} />
-        <Route path="/menuinsert" Component={ShopDetail} />
+        <Route path="/menuinsert/:id" Component={ShopDetail} />
         <Route path="/shopinsert" Component={ShopInsert} />
         <Route path="/shoplist" Component={ShopList} />
       </Routes>

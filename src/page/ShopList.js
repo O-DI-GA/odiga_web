@@ -1,52 +1,44 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "../css/ShopList.css";
+import axios from "axios";
+import { URL } from "../App.js";
+import { useAccessToken } from "../store/useStore.js";
+import { useNavigate } from "react-router-dom";
 
 const ShopList = () => {
-  const [shops, setShops] = useState([
-    {
-      storeId: 1,
-      storeName: "odiga",
-      address: "odegano",
-      phoneNumber: "123456789",
-      reviewCount: 0,
-      storeCategory: null,
-    },
-    {
-      storeId: 2,
-      storeName: "shop2",
-      address: "add",
-      phoneNumber: "123456789",
-      reviewCount: 1,
-      storeCategory: "한식",
-    },
-    {
-      storeId: 3,
-      storeName: "shop3",
-      address: "add",
-      phoneNumber: "123456789",
-      reviewCount: 1,
-      storeCategory: "한식",
-    },
-    {
-      storeId: 4,
-      storeName: "엄청 긴 가게 이름이름이름의르이ㅡ밍리을이믬의으미을미",
-      address: "add",
-      phoneNumber: "123456789",
-      reviewCount: 1,
-      storeCategory: "한식",
-    },
-    {
-      storeId: 5,
-      storeName: "shop5",
-      address: "대구광역시 ㅇ구 ㅇㅇ동 어쩌구 저쩌구 긴 주소",
-      phoneNumber: "123456789",
-      reviewCount: 1,
-      storeCategory: "한식",
-    },
-  ]);
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const [shops, setShops] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const token = useAccessToken().accessToken;
+
+  useEffect(() => {
+    axios
+      .get(`${URL}/api/v1/owner/store`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.httpStatusCode === 200) {
+          setShops(response.data.data);
+        } else {
+          setError("Failed to fetch shops.");
+        }
+      })
+      .catch((error) => {
+        setError("Error fetching data: " + error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [token]);
+
+  const handleShopClick = (storeId) => {
+    navigate(`/menuinsert/${storeId}`);
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -62,7 +54,11 @@ const ShopList = () => {
       ) : (
         <div className="shopList">
           {shops.map((shop) => (
-            <div key={shop.storeId} className="shopItem">
+            <div
+              key={shop.storeId}
+              className="shopItem"
+              onClick={() => handleShopClick(shop.storeId)}
+            >
               <div className="shopInfo">
                 <h2 className="ellipsis" style={{ marginBottom: "10px" }}>
                   {shop.storeName}
