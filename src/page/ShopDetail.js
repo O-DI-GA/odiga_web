@@ -10,7 +10,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 
-import MenuInsert from "../page/MenuInsert";
+// import MenuInsert from "../page/MenuInsert";
+import CategoryMenuList from "./CategoryMenuList";
 
 const drawerWidth = 240;
 
@@ -50,7 +51,7 @@ function ShopDetail(props) {
   const renderContent = () => {
     switch (selectedTab) {
       case "카테고리 및 메뉴 등록":
-        return <MenuInsert />;
+        return <CategoryMenuList />;
       case "가게 정보":
         return <div>가게 정보 페이지 내용</div>;
       case "사장 정보":

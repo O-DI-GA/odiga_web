@@ -2,7 +2,6 @@ import React from "react";
 
 import Home from "./page/Home";
 import ShopInsert from "./page/ShopInsert";
-import MenuInsert from "./page/MenuInsert";
 import Login from "./page/auth/Login";
 import ShopList from "./page/ShopList";
 import ShopDetail from "./page/ShopDetail";
@@ -16,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/login" Component={Login} />
-        <Route path="/menuinsert" Component={ShopDetail} />
+        <Route path="/menuinsert/:id" Component={ShopDetail} />
         <Route path="/shopinsert" Component={ShopInsert} />
         <Route path="/shoplist" Component={ShopList} />
       </Routes>
