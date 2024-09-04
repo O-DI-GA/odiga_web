@@ -2,7 +2,6 @@ import React from "react";
 
 import Home from "./page/Home";
 import ShopInsert from "./page/ShopInsert";
-import MenuInsert from "./page/MenuInsert";
 import Login from "./page/auth/Login";
 import ShopList from "./page/ShopList";
 import ShopDetail from "./page/ShopDetail";

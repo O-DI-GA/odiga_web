@@ -5,3 +5,11 @@
 .modal-backdrop {
   z-index: 10400;
 }
+
+/* 카테고리 css */
+.category-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px 2rem;
+}
