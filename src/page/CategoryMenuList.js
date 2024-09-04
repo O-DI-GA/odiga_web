@@ -86,8 +86,8 @@ export default function CategoryMenuList() {
       const data = { name: categoryName };
 
       try {
-        const postResponse = await postData(url, data, token);
-        if (postResponse.status === 201) {
+        const postResponse = await postData(url, token, data);
+        if (postResponse.httpStatusCode === 201) {
           alert("카테고리가 성공적으로 추가되었습니다.");
           fetchCategoryList();
         }
@@ -137,7 +137,7 @@ export default function CategoryMenuList() {
   // 메뉴 모달
   const PostMenu = (props) => {
     // 메뉴 폼 상태관리
-    const [file, setFile] = React.useState(null);
+    const [menuImage, setFile] = React.useState(null);
 
     const [menuData, setMenuData] = React.useState({
       menuName: "",
@@ -184,7 +184,7 @@ export default function CategoryMenuList() {
         return false;
       }
 
-      if (!file) {
+      if (!menuImage) {
         alert("파일을 업로드하세요.");
         return false;
       }
@@ -201,8 +201,8 @@ export default function CategoryMenuList() {
       const formData = new FormData();
 
       // FormData에 data 추가
-      if (file) {
-        formData.append("file", file);
+      if (menuImage) {
+        formData.append("menuImage", menuImage);
       }
 
       for (const key in menuData) {
@@ -219,8 +219,9 @@ export default function CategoryMenuList() {
 
       try {
         const postResponse = await postWithFileData(url, token, formData);
-        if (postResponse.status === 201) {
+        if (postResponse.httpStatusCode === 201) {
           alert("메뉴가 성공적으로 추가되었습니다.");
+          fetchMenuList(selectedCategory);
         }
       } catch (error) {
         alert("메뉴 추가에 실패하였습니다.");
