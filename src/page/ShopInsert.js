@@ -67,8 +67,8 @@ function ShopInsert() {
 
   return (
     <div className="shopInsert">
-      <h1>가게 등록</h1>
       <form className="shopInsertForm" onSubmit={handleSubmit}>
+        <h1 style={{ textAlign: "center" }}>가게 등록</h1>
         <div className="shopInsertFormItem">
           <label htmlFor="storeName">가게 이름</label>
           <input
