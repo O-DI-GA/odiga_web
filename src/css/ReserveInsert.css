@@ -1,15 +1,14 @@
 .ReserveInsert {
-  /* justify-content: center; */
   text-align: center;
-  /* background-color: #2d9cdb; */
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #f3f2f7;
-  width: 500px;
-  min-height: 200px;
+  padding: 50px;
+  border-radius: 20px;
+  border: 1px solid rgb(202, 202, 202);
+  box-shadow: 3px 4px 10px gray;
   margin: 0 auto;
   margin-top: 50px;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  width: 60%;
+  max-width: 600px;
+  min-width: 450px;
 }
 
 .reservationTimeInput {
