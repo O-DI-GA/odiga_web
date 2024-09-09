@@ -1,0 +1,48 @@
+.ReserveInsert {
+  /* justify-content: center; */
+  text-align: center;
+  /* background-color: #2d9cdb; */
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #f3f2f7;
+  width: 500px;
+  min-height: 200px;
+  margin: 0 auto;
+  margin-top: 50px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.reservationTimeInput {
+  width: 220px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #f7f7f7;
+  margin-right: 5px;
+}
+
+.isAvailableInput {
+  width: 70px;
+  padding: 11px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #F3F2F7;
+}
+
+.addTime {
+  background-color: #d5e5f3;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 25px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.reservationTimeSubmit {
+  background-color: #2d9cdb;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 25px;
+}
