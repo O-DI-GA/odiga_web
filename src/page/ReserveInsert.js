@@ -26,7 +26,19 @@ const ReserveInsert = () => {
     ]);
   };
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const url = `/reservation/${storeId}`;
+      await postData(url, token, reservationTimes);
+      alert("예약 시간이 성공적으로 등록되었습니다.");
+      setLoading(false);
+    } catch (error) {
+      console.error("예약 시간 등록 중 오류가 발생했습니다:", error);
+      alert("예약 시간 등록 중 오류가 발생했습니다.");
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="ReserveInsert">
