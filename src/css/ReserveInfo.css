@@ -1,0 +1,15 @@
+.reserveInfoTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+
+.reserveInsertButton {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #D5E5F3;
+}
