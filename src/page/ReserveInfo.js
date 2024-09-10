@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../store/useStore";
-import { getData } from "../api/Users";
+import { getData, deleteData } from "../api/Users";
 import "../css/ReserveInfo.css";
 
 const ReserveInfo = () => {
@@ -35,6 +35,22 @@ const ReserveInfo = () => {
     navigate(`/reserveinsert/${storeId}`);
   };
 
+  const handleDelete = async (timeId) => {
+    try {
+      const url = `/reservation/availableReservationTime/${timeId}`;
+      await deleteData(url, token);
+      setReservationTimes(
+        reservationTimes.filter(
+          (time) => time.availableReservationTimeId !== timeId
+        )
+      );
+      alert("예약 시간이 삭제되었습니다.");
+    } catch (error) {
+      console.error("예약 시간 삭제 중 오류가 발생했습니다:", error);
+      alert("예약 시간 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
   if (loading) {
     return <div>로딩 중...</div>;
   }
@@ -59,6 +75,11 @@ const ReserveInfo = () => {
             .map((time) => (
               <li key={time.availableReservationTimeId}>
                 {time.availableReservationTime}
+                <button
+                  onClick={() => handleDelete(time.availableReservationTimeId)}
+                >
+                  삭제
+                </button>
               </li>
             ))
         ) : (
