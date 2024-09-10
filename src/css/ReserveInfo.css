@@ -6,10 +6,39 @@
   margin-bottom: 10px;
 }
 
-
 .reserveInsertButton {
   padding: 10px 20px;
   border-radius: 5px;
   border: none;
   background-color: #D5E5F3;
+}
+
+.reserveTimeList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0px;
+  margin-top: 20px;
+  border: 1px solid #F3F2F7;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.reserveTimeContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reserveTimeButtonContainer {
+  display: flex;
+  gap: 5px;
+}
+
+.reserveTimeButton {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #F3F2F7;
+  font-size: small;
 }

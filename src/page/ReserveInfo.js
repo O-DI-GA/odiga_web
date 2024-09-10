@@ -67,7 +67,7 @@ const ReserveInfo = () => {
           예약 시간 등록
         </button>
       </div>
-      <ul>
+      <ul className="reserveTimeList">
         {reservationTimes.length > 0 ? (
           reservationTimes
             .slice()
@@ -77,18 +77,27 @@ const ReserveInfo = () => {
                 new Date(b.availableReservationTime)
             )
             .map((time) => (
-              <li key={time.availableReservationTimeId}>
+              <li
+                key={time.availableReservationTimeId}
+                className="reserveTimeContainer"
+              >
                 {time.availableReservationTime}
-                <button
-                  onClick={() => handleEdit(time.availableReservationTimeId)}
-                >
-                  수정
-                </button>
-                <button
-                  onClick={() => handleDelete(time.availableReservationTimeId)}
-                >
-                  삭제
-                </button>
+                <div className="reserveTimeButtonContainer">
+                  <button
+                    className="reserveTimeButton"
+                    onClick={() => handleEdit(time.availableReservationTimeId)}
+                  >
+                    수정
+                  </button>
+                  <button
+                    className="reserveTimeButton"
+                    onClick={() =>
+                      handleDelete(time.availableReservationTimeId)
+                    }
+                  >
+                    삭제
+                  </button>
+                </div>
               </li>
             ))
         ) : (
