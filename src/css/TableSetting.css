@@ -1,0 +1,15 @@
+table{
+   border-spacing: 20px;
+  border-collapse: separate; 
+}
+
+.table-columns{
+    text-align: center;
+}
+
+.table-btn{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-left: 30px;
+}
