@@ -49,11 +49,18 @@ const ReserveInfo = () => {
       </div>
       <ul>
         {reservationTimes.length > 0 ? (
-          reservationTimes.map((time) => (
-            <li key={time.availableReservationTimeId}>
-              {time.availableReservationTime}
-            </li>
-          ))
+          reservationTimes
+            .slice()
+            .sort(
+              (a, b) =>
+                new Date(a.availableReservationTime) -
+                new Date(b.availableReservationTime)
+            )
+            .map((time) => (
+              <li key={time.availableReservationTimeId}>
+                {time.availableReservationTime}
+              </li>
+            ))
         ) : (
           <li>예약 가능 시간이 없습니다.</li>
         )}
