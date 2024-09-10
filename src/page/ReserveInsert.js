@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../store/useStore";
 import { postData } from "../api/Users";
 import "../css/ReserveInsert.css";
@@ -7,6 +7,7 @@ import "../css/ReserveInsert.css";
 const ReserveInsert = () => {
   const { storeId } = useParams();
   const token = useAccessToken().accessToken;
+  const navigate = useNavigate();
 
   const [reservationTimes, setReservationTimes] = useState([
     { availableReservationTime: "", isAvailable: true },
@@ -33,6 +34,7 @@ const ReserveInsert = () => {
       await postData(url, token, reservationTimes);
       alert("예약 시간이 성공적으로 등록되었습니다.");
       setLoading(false);
+      navigate(`/menuinsert/${storeId}`); // 이전 화면으로 이동
     } catch (error) {
       console.error("예약 시간 등록 중 오류가 발생했습니다:", error);
       alert("예약 시간 등록 중 오류가 발생했습니다.");
