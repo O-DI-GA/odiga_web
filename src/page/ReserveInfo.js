@@ -12,6 +12,25 @@ const ReserveInfo = () => {
   const [reservationTimes, setReservationTimes] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchReservationTimes = async () => {
+      try {
+        const url = `/reservation/${storeId}/availableReservationTime`;
+        const data = await getData(url, token);
+        setReservationTimes(data.data);
+        setLoading(false);
+      } catch (error) {
+        console.error(
+          "예약 가능 시간을 불러오는 중 오류가 발생했습니다:",
+          error
+        );
+        setLoading(false);
+      }
+    };
+
+    fetchReservationTimes();
+  }, [storeId, token]);
+
   const handleReserveInsert = () => {
     navigate(`/reserveinsert/${storeId}`);
   };
@@ -32,7 +51,7 @@ const ReserveInfo = () => {
         {reservationTimes.length > 0 ? (
           reservationTimes.map((time) => (
             <li key={time.availableReservationTimeId}>
-              {time.availableReservationTime} {time.available ? "가능" : "불가"}
+              {time.availableReservationTime}
             </li>
           ))
         ) : (
