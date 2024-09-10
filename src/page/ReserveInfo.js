@@ -35,6 +35,10 @@ const ReserveInfo = () => {
     navigate(`/reserveinsert/${storeId}`);
   };
 
+  const handleEdit = (timeId) => {
+    navigate(`/reserveedit/${storeId}/${timeId}`);
+  };
+
   const handleDelete = async (timeId) => {
     try {
       const url = `/reservation/availableReservationTime/${timeId}`;
@@ -75,6 +79,11 @@ const ReserveInfo = () => {
             .map((time) => (
               <li key={time.availableReservationTimeId}>
                 {time.availableReservationTime}
+                <button
+                  onClick={() => handleEdit(time.availableReservationTimeId)}
+                >
+                  수정
+                </button>
                 <button
                   onClick={() => handleDelete(time.availableReservationTimeId)}
                 >
