@@ -13,6 +13,7 @@ import Toolbar from "@mui/material/Toolbar";
 // import MenuInsert from "../page/MenuInsert";
 import CategoryMenuList from "./CategoryMenuList";
 import TableSetting from "./TableSetting";
+import ReserveInfo from "./ReserveInfo";
 
 const drawerWidth = 240;
 
@@ -35,7 +36,7 @@ function ShopDetail(props) {
       <Toolbar />
       <Divider />
       <List>
-        {["카테고리 및 메뉴 등록", "테이블 정보 등록", "사장 정보"].map((text) => (
+        {["카테고리 및 메뉴 등록", "테이블 정보 등록", "예약 정보"].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => handleTabClick(text)}>
               <ListItemText primary={text} />
@@ -57,6 +58,9 @@ function ShopDetail(props) {
         return <TableSetting/>;
       case "사장 정보":
         return <div>사장 정보 페이지 내용</div>;
+      case "예약 정보":
+        return <ReserveInfo />;
+      case "결제 정보":
       default:
         return null;
     }
@@ -68,7 +72,8 @@ function ShopDetail(props) {
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders">
+        aria-label="mailbox folders"
+      >
         <Drawer
           container={container}
           variant="temporary"
@@ -83,7 +88,8 @@ function ShopDetail(props) {
               boxSizing: "border-box",
               width: drawerWidth,
             },
-          }}>
+          }}
+        >
           {drawer}
         </Drawer>
         <Drawer
@@ -95,7 +101,8 @@ function ShopDetail(props) {
               width: drawerWidth,
             },
           }}
-          open>
+          open
+        >
           {drawer}
         </Drawer>
       </Box>
@@ -105,7 +112,8 @@ function ShopDetail(props) {
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-        }}>
+        }}
+      >
         {renderContent()}
       </Box>
     </Box>
