@@ -91,7 +91,7 @@ export const postWithFileData = async (url, token, data) => {
 export const updateData = async (url, token, data) => {
   try {
     const response = await baseInstance({
-      method: "UPDATE",
+      method: "PUT",
       url: url,
       headers: {
         Authorization: `Bearer ${token}`,
