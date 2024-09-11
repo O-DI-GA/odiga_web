@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../store/useStore";
 import { getData, deleteData } from "../api/Users";
+import { Button } from "@mui/material";
 import "../css/ReserveInfo.css";
 
 const ReserveInfo = () => {
@@ -83,20 +84,23 @@ const ReserveInfo = () => {
               >
                 {time.availableReservationTime}
                 <div className="reserveTimeButtonContainer">
-                  <button
+                  <Button
                     className="reserveTimeButton"
+                    variant="outlined"
                     onClick={() => handleEdit(time.availableReservationTimeId)}
                   >
                     수정
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     className="reserveTimeButton"
+                    variant="outlined"
+                    color="error"
                     onClick={() =>
                       handleDelete(time.availableReservationTimeId)
                     }
                   >
                     삭제
-                  </button>
+                  </Button>
                 </div>
               </li>
             ))
