@@ -12,6 +12,7 @@ import Toolbar from "@mui/material/Toolbar";
 
 // import MenuInsert from "../page/MenuInsert";
 import CategoryMenuList from "./CategoryMenuList";
+import TableSetting from "./TableSetting";
 import ReserveInfo from "./ReserveInfo";
 
 const drawerWidth = 240;
@@ -35,15 +36,13 @@ function ShopDetail(props) {
       <Toolbar />
       <Divider />
       <List>
-        {["카테고리 및 메뉴 등록", "가게 정보", "사장 정보", "예약 정보"].map(
-          (text) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton onClick={() => handleTabClick(text)}>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
+        {["카테고리 및 메뉴 등록", "테이블 정보 등록", "예약 정보"].map((text) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton onClick={() => handleTabClick(text)}>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </div>
   );
@@ -55,8 +54,8 @@ function ShopDetail(props) {
     switch (selectedTab) {
       case "카테고리 및 메뉴 등록":
         return <CategoryMenuList />;
-      case "가게 정보":
-        return <div>가게 정보 페이지 내용</div>;
+      case "테이블 정보 등록":
+        return <TableSetting/>;
       case "사장 정보":
         return <div>사장 정보 페이지 내용</div>;
       case "예약 정보":
