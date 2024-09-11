@@ -249,7 +249,7 @@ export default function TableSetting() {
         style={{ zIndex: "10500" }}
       >
         <Modal.Header closeButton>
-          <b>테이블 추가</b>
+          <b>테이블 정보 수정</b>
         </Modal.Header>
         <Modal.Body>
           <Form>
