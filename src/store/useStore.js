@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 // acessToken 반환
 export function useAccessToken() {
   const accessToken = useSelector((state) => state.authToken.accessToken);
-  return accessToken;
+  return { accessToken: accessToken || "" };
 }
 
 // authenticated 반환 (로그인 여부)
