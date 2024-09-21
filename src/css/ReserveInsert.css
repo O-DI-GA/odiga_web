@@ -1,52 +1,153 @@
-.ReserveInsert,
-.ReserveEdit {
+.reserveInsert {
   text-align: center;
-  padding: 50px;
+  padding: 40px;
   border-radius: 20px;
   border: 1px solid rgb(202, 202, 202);
-  box-shadow: 3px 4px 10px gray;
+  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
   margin-top: 50px;
-  width: 60%;
-  max-width: 600px;
-  min-width: 450px;
+  width: 80%;
+  max-width: 1000px;
+  min-width: 600px;
+  background-color: #fff;
 }
 
-.reservationTimeInput {
-  width: 220px;
+.title {
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.monthSelection {
+  margin-bottom: 20px;
+}
+
+.monthSelection select {
   padding: 10px;
-  border: none;
   border-radius: 5px;
-  margin-bottom: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+}
+
+.daySelection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.dayButton {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin: 0 5px;
   background-color: #f7f7f7;
+  cursor: pointer;
+}
+
+.dayButton.selected {
+  background-color: #28a745;
+  color: white;
+}
+
+.scheduleSettings {
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.timeInput {
+  border: 1px solid #ccc;
+  border-radius: 5px !important;
+}
+
+.radioGroup {
+  display: flex;
+  align-items: center;
+}
+
+.radioGroup label {
+  margin-right: 15px;
+}
+
+.radioGroup input[type="radio"] {
   margin-right: 5px;
 }
 
-.isAvailableInput {
-  width: 70px;
-  padding: 11px;
+.addScheduleButton {
+  background-color: #4caf50;
   border: none;
   border-radius: 5px;
-  margin-bottom: 10px;
-  background-color: #F3F2F7;
-}
-
-.addTime {
-  background-color: #d5e5f3;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 25px;
-  margin-right: 10px;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
   margin-top: 10px;
 }
 
-.ReserveEdit .reservationTimeSubmit {
-  width: 295px;
+.addScheduleButton:hover {
+  background-color: #45a049;
 }
 
-.reservationTimeSubmit {
-  background-color: #2d9cdb;
+/* 스케줄 리스트 */
+.scheduleList {
+  margin-top: 20px;
+}
+
+.scheduleItem {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.scheduleItem :last-child {
+  border: none;
+}
+
+.scheduleSubitem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.removeScheduleButton {
+  background-color: #fff;
+  border: 1px solid #f44336 !important;
+  color: #f44336;
+  border-radius: 5px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.reservationSubmitButton {
+  background-color: #2D9CDB;
   border: none;
   border-radius: 5px;
-  padding: 10px 25px;
+  padding: 15px 30px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.reservationSubmitButton:disabled {
+  background-color: #D5E5F3;
+  cursor: not-allowed;
+}
+
+.reservationSubmitButton:hover:not(:disabled) {
+  background-color: #4077C9;
 }
