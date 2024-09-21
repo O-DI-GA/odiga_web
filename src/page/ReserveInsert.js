@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../store/useStore";
 import { postData } from "../api/Users";
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import "../css/ReserveInsert.css";
 
 const ReserveInsert = () => {
@@ -12,8 +14,8 @@ const ReserveInsert = () => {
   const [selectedDays, setSelectedDays] = useState([]);
   const [scheduleData, setScheduleData] = useState([]);
   const [month, setMonth] = useState(9);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
   const [intervalMinutes, setIntervalMinutes] = useState(30);
   const [loading, setLoading] = useState(false);
 
@@ -28,8 +30,15 @@ const ReserveInsert = () => {
   const handleAddSchedule = () => {
     const newSchedules = selectedDays.map((day) => ({
       dayOfWeek: day,
-      startTime,
-      endTime,
+      startTime: startTime
+        ? startTime.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        : "",
+      endTime: endTime
+        ? endTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        : "",
       intervalMinutes,
     }));
 
@@ -85,114 +94,118 @@ const ReserveInsert = () => {
   };
 
   return (
-    <div className="reserveInsert">
-      <h2 className="title">예약 시간 등록</h2>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <div className="reserveInsert">
+        <h2 className="title">예약 시간 등록</h2>
 
-      <div className="monthSelection">
-        <select
-          value={month}
-          onChange={(e) => setMonth(parseInt(e.target.value))}
-        >
-          {[...Array(12)].map((_, i) => (
-            <option key={i + 1} value={i + 1}>
-              {i + 1}월
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="daySelection">
-        {["월", "화", "수", "목", "금", "토", "일"].map((day, index) => (
-          <button
-            key={index}
-            className={`dayButton ${
-              selectedDays.includes(day) ? "selected" : ""
-            }`}
-            onClick={() => handleDaySelect(day)}
+        <div className="monthSelection">
+          <select
+            value={month}
+            onChange={(e) => setMonth(parseInt(e.target.value))}
           >
-            {day}
-          </button>
-        ))}
-      </div>
-
-      <div className="scheduleSettings">
-        <div className="inputGroup">
-          <label>시작 시간</label>
-          <input
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            className="timeInput"
-          />
-          <label>종료 시간</label>
-          <input
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            className="timeInput"
-          />
+            {[...Array(12)].map((_, i) => (
+              <option key={i + 1} value={i + 1}>
+                {i + 1}월
+              </option>
+            ))}
+          </select>
         </div>
 
-        <div className="inputGroup">
-          <label>간격⠀⠀⠀</label>
-          <div className="radioGroup">
-            <label>
-              <input
-                type="radio"
-                value={30}
-                checked={intervalMinutes === 30}
-                onChange={() => setIntervalMinutes(30)}
-              />
-              30분
-            </label>
-            <label>
-              <input
-                type="radio"
-                value={60}
-                checked={intervalMinutes === 60}
-                onChange={() => setIntervalMinutes(60)}
-              />
-              1시간
-            </label>
+        <div className="daySelection">
+          {["월", "화", "수", "목", "금", "토", "일"].map((day, index) => (
+            <button
+              key={index}
+              className={`dayButton ${
+                selectedDays.includes(day) ? "selected" : ""
+              }`}
+              onClick={() => handleDaySelect(day)}
+            >
+              {day}
+            </button>
+          ))}
+        </div>
+
+        <div className="scheduleSettings">
+          <div className="inputGroup">
+            <TimePicker
+              label="시작 시간"
+              value={startTime}
+              onChange={(newValue) => setStartTime(newValue)}
+              renderInput={(params) => (
+                <input {...params} className="timeInput" />
+              )}
+            />
+            <TimePicker
+              label="종료 시간"
+              value={endTime}
+              onChange={(newValue) => setEndTime(newValue)}
+              renderInput={(params) => (
+                <input {...params} className="timeInput" />
+              )}
+            />
           </div>
+
+          <div className="inputGroup">
+            <label>간격⠀⠀⠀</label>
+            <div className="radioGroup">
+              <label>
+                <input
+                  type="radio"
+                  value={30}
+                  checked={intervalMinutes === 30}
+                  onChange={() => setIntervalMinutes(30)}
+                />
+                30분
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value={60}
+                  checked={intervalMinutes === 60}
+                  onChange={() => setIntervalMinutes(60)}
+                />
+                1시간
+              </label>
+            </div>
+          </div>
+
+          <button onClick={handleAddSchedule} className="addScheduleButton">
+            + 시간 추가
+          </button>
         </div>
 
-        <button onClick={handleAddSchedule} className="addScheduleButton">
-          + 시간 추가
+        <div className="scheduleList">
+          {scheduleData.map((schedule, monthIndex) => (
+            <div key={monthIndex} className="scheduleItem">
+              <h3>{schedule.month}월</h3>
+              {schedule.daySchedules.map((daySchedule, dayIndex) => (
+                <div key={dayIndex} className="scheduleSubitem">
+                  <span>{daySchedule.dayOfWeek}요일</span>
+                  <span>
+                    {daySchedule.startTime} ~ {daySchedule.endTime}
+                  </span>
+                  <span>{daySchedule.intervalMinutes}분 간격</span>
+                  <button
+                    onClick={() => handleRemoveSchedule(monthIndex, dayIndex)}
+                    className="removeScheduleButton"
+                  >
+                    삭제
+                  </button>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          disabled={loading}
+          className="reservationSubmitButton"
+        >
+          {loading ? "등록 중..." : "예약 시간 등록"}
         </button>
       </div>
-
-      <div className="scheduleList">
-        {scheduleData.map((schedule, monthIndex) => (
-          <div key={monthIndex} className="scheduleItem">
-            <h3>{schedule.month}월</h3>
-            {schedule.daySchedules.map((daySchedule, dayIndex) => (
-              <div key={dayIndex} className="scheduleSubitem">
-                <span>{daySchedule.dayOfWeek}요일</span>
-                <span>
-                  {daySchedule.startTime} ~ {daySchedule.endTime}
-                </span>
-                <span>{daySchedule.intervalMinutes}분 간격</span>
-                <button
-                  onClick={() => handleRemoveSchedule(monthIndex, dayIndex)}
-                  className="removeScheduleButton"
-                >
-                  삭제
-                </button>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-
-      <button
-        onClick={handleSubmit}
-        disabled={loading}
-        className="reservationSubmitButton"
-      >
-        {loading ? "등록 중..." : "예약 시간 등록"}
-      </button>
-    </div>
+    </LocalizationProvider>
   );
 };
 
