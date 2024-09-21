@@ -49,11 +49,26 @@ const ReserveInsert = () => {
     );
 
     if (existingMonthIndex !== -1) {
-      // 해당 월이 이미 존재하면 daySchedules만 업데이트
-      updatedScheduleData[existingMonthIndex].daySchedules = [
-        ...updatedScheduleData[existingMonthIndex].daySchedules,
-        ...newSchedules,
-      ];
+      // 해당 월의 스케줄이 존재할 때
+      newSchedules.forEach((newSchedule) => {
+        const existingDayIndex = updatedScheduleData[
+          existingMonthIndex
+        ].daySchedules.findIndex(
+          (daySchedule) => daySchedule.dayOfWeek === newSchedule.dayOfWeek
+        );
+
+        if (existingDayIndex !== -1) {
+          // 이미 존재하는 요일이면 기존 데이터를 덮어쓰기
+          updatedScheduleData[existingMonthIndex].daySchedules[
+            existingDayIndex
+          ] = newSchedule;
+        } else {
+          // 중복된 요일이 없으면 새 데이터를 추가
+          updatedScheduleData[existingMonthIndex].daySchedules.push(
+            newSchedule
+          );
+        }
+      });
     } else {
       // 해당 월이 없으면 새로운 월 스케줄 추가
       updatedScheduleData.push({
