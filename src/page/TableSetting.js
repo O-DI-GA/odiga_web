@@ -42,6 +42,10 @@ export default function TableSetting() {
         accessToken
       );
       console.log("테이블 데이터 리스트 : ", fecthTableApi.data);
+      // 테이블 번호 기준으로 오름차순 정렬
+      const sortedTableData = fecthTableApi.data.sort(
+        (a, b) => parseInt(a.tableNumber) - parseInt(b.tableNumber)
+      );
       setTableData(fecthTableApi.data);
     } catch (error) {
       console.error("Error fetching table data:", error);
