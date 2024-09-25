@@ -2,104 +2,126 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../store/useStore";
 import { getData, updateData } from "../api/Users";
-import "../css/ReserveInsert.css";
+import { Button, TextField } from "@mui/material";
+import {
+  LocalizationProvider,
+  DatePicker,
+  TimePicker,
+} from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const ReserveEdit = () => {
-  const { storeId, timeId } = useParams();
+  const { storeId } = useParams();
   const token = useAccessToken().accessToken;
   const navigate = useNavigate();
 
-  const [reservationTime, setReservationTime] = useState({
-    availableReservationTime: "",
-    isAvailable: true,
-  });
-  const [loading, setLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const [intervalMinutes, setIntervalMinutes] = useState(30);
 
-  // 예약 시간 불러오기
   useEffect(() => {
-    const fetchReservationTime = async () => {
-      try {
-        const url = `/reservation/${storeId}/availableReservationTime`;
-        const data = await getData(url, token);
-        console.log("불러온 데이터: ", data);
+    if (selectedDate) {
+      const fetchReservationTimes = async () => {
+        try {
+          const url = `/reservation/${storeId}`;
+          const data = await getData(url, token);
+          const selectedDayData = data.data.filter(
+            (time) =>
+              new Date(time.availableReservationTime).toDateString() ===
+              selectedDate.toDateString()
+          );
 
-        // timeId와 일치하는 예약 시간 찾기
-        const selectedTime = data.data.find(
-          (time) => time.availableReservationTimeId === parseInt(timeId)
-        );
-
-        if (selectedTime) {
-          setReservationTime({
-            availableReservationTime: selectedTime.availableReservationTime,
-            isAvailable: selectedTime.isAvailable,
-          });
-        } else {
-          console.error("해당 예약 시간을 찾을 수 없습니다.");
+          if (selectedDayData.length > 0) {
+            const availableTime = new Date(
+              selectedDayData[0].availableReservationTime
+            );
+            setStartTime(availableTime);
+            setEndTime(new Date(availableTime.getTime() + 60 * 60 * 1000)); // 기본 1시간 추가
+          }
+        } catch (error) {
+          console.error("예약 시간을 불러오는 중 오류가 발생했습니다:", error);
         }
+      };
 
-        setLoading(false);
-      } catch (error) {
-        console.error("예약 시간을 불러오는 중 오류가 발생했습니다:", error);
-        setLoading(false);
-      }
-    };
+      fetchReservationTimes();
+    }
+  }, [selectedDate, storeId, token]);
 
-    fetchReservationTime();
-  }, [storeId, timeId, token]);
-
-  const handleInputChange = (field, value) => {
-    setReservationTime({
-      ...reservationTime,
-      [field]: value,
-    });
-  };
-
-  const handleSubmit = async () => {
-    setLoading(true);
+  const handleSaveChanges = async () => {
+    console.log("저장하는 날짜:", selectedDate);
     try {
-      const url = `/reservation/${storeId}/availableReservationTime/${timeId}`;
-      await updateData(url, token, reservationTime);
+      const url = `/reservation/${storeId}`;
+      await updateData(url, token, {
+        storeId: parseInt(storeId),
+        date: selectedDate.toISOString().split("T")[0], // "YYYY-MM-DD" 형식으로 변환
+        newStartTime: startTime
+          ? startTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "",
+        newEndTime: endTime
+          ? endTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "",
+        intervalMinutes,
+        isAvailable: true,
+      });
       alert("예약 시간이 성공적으로 수정되었습니다.");
-      setLoading(false);
-      navigate(`/menuinsert/${storeId}`); // 예약 정보 페이지로 이동
+      navigate(`/reserveinfo/${storeId}`);
     } catch (error) {
       console.error("예약 시간 수정 중 오류가 발생했습니다:", error);
       alert("예약 시간 수정 중 오류가 발생했습니다.");
-      setLoading(false);
     }
   };
 
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
-
   return (
-    <div className="ReserveEdit">
-      <h2 style={{ marginBottom: "30px" }}>예약 시간 수정</h2>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div>
-        <input
-          type="datetime-local"
-          value={reservationTime.availableReservationTime}
-          className="reservationTimeInput"
-          onChange={(e) =>
-            handleInputChange("availableReservationTime", e.target.value)
-          }
+        <h2>예약 시간 수정</h2>
+
+        <DatePicker
+          label="날짜 선택"
+          value={selectedDate}
+          onChange={(newDate) => {
+            setSelectedDate(newDate);
+            console.log("선택한 날짜: " + newDate);
+          }}
+          renderInput={(params) => <TextField {...params} />}
         />
-        <select
-          value={reservationTime.isAvailable}
-          className="isAvailableInput"
-          onChange={(e) =>
-            handleInputChange("isAvailable", e.target.value === "true")
-          }
-        >
-          <option value="true">가능</option>
-          <option value="false">불가</option>
-        </select>
+
+        <div>
+          <TimePicker
+            label="시작 시간"
+            value={startTime}
+            onChange={(newStartTime) => setStartTime(newStartTime)}
+            renderInput={(params) => <TextField {...params} />}
+          />
+          <TimePicker
+            label="종료 시간"
+            value={endTime}
+            onChange={(newEndTime) => setEndTime(newEndTime)}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </div>
+
+        <div>
+          <label>간격</label>
+          <select
+            value={intervalMinutes}
+            onChange={(e) => setIntervalMinutes(parseInt(e.target.value))}
+          >
+            <option value={30}>30분</option>
+            <option value={60}>1시간</option>
+          </select>
+        </div>
+
+        <Button onClick={handleSaveChanges}>변경 사항 저장</Button>
       </div>
-      <button onClick={handleSubmit} className="reservationTimeSubmit">
-        예약 시간 수정
-      </button>
-    </div>
+    </LocalizationProvider>
   );
 };
 
