@@ -25,7 +25,7 @@ function App() {
       <Route path="/shopinsert" Component={ShopInsert} />
       <Route path="/shoplist" Component={ShopList} />
       <Route path="/reserveinsert/:storeId" Component={ReserveInsert} />
-      <Route path="/reserveedit/:storeId/:timeId" Component={ReserveEdit} />
+      <Route path="/reserveedit/:storeId" Component={ReserveEdit} />
     </Routes>
   );
 }
