@@ -4,6 +4,7 @@ import axios from "axios";
 import { URL } from "../App.js";
 import { useAccessToken } from "../store/useStore.js";
 import { useNavigate } from "react-router-dom";
+import { postWithFileData } from "../api/Users.js";
 
 function ShopInsert() {
   const navigate = useNavigate();
@@ -51,15 +52,16 @@ function ShopInsert() {
       formData.append("latitude", lat); // 위도
       formData.append("storeCategory", storeCategory);
 
-      await axios.post(`${URL}/api/v1/owner/store`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const postResponse = await postWithFileData(
+        `${URL}/api/v1/owner/store`,
+        token,
+        formData
+      );
 
-      alert("가게 등록 성공");
-      navigate("/shoplist");
+      if (postResponse.httpStatusCode === 201) {
+        alert("가게 등록 성공");
+        navigate("/shoplist");
+      }
     } catch (error) {
       alert("가게 등록 실패...");
     }

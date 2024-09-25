@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../css/ShopList.css";
-import axios from "axios";
 import { URL } from "../App.js";
 import { useAccessToken } from "../store/useStore.js";
 import { useNavigate } from "react-router-dom";
+import { getData } from "../api/Users.js";
 
 const ShopList = () => {
   const navigate = useNavigate();
@@ -15,25 +15,22 @@ const ShopList = () => {
   const token = useAccessToken().accessToken;
 
   useEffect(() => {
-    axios
-      .get(`${URL}/api/v1/owner/store`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        if (response.data.httpStatusCode === 200) {
-          setShops(response.data.data);
+    const fetchShops = async () => {
+      try {
+        const response = await getData(`${URL}/api/v1/owner/store`, token);
+        if (response.httpStatusCode === 200) {
+          setShops(response.data); // 성공 시 데이터 설정
         } else {
           setError("Failed to fetch shops.");
         }
-      })
-      .catch((error) => {
-        setError("Error fetching data: " + error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      } catch (error) {
+        setError("Error fetching data: " + error.message); // 에러 처리
+      } finally {
+        setLoading(false); // 로딩 상태 해제
+      }
+    };
+
+    fetchShops(); // 비동기 함수 호출
   }, [token]);
 
   const handleShopClick = (storeId) => {
