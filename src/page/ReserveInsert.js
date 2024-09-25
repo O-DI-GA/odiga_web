@@ -42,6 +42,8 @@ const ReserveInsert = () => {
       intervalMinutes,
     }));
 
+    const dayOrder = ["월", "화", "수", "목", "금", "토", "일"];
+
     // 기존 month가 있으면 업데이트, 없으면 추가
     const updatedScheduleData = [...scheduleData];
     const existingMonthIndex = updatedScheduleData.findIndex(
@@ -69,6 +71,11 @@ const ReserveInsert = () => {
           );
         }
       });
+
+      // 요일 순으로 정렬
+      updatedScheduleData[existingMonthIndex].daySchedules.sort(
+        (a, b) => dayOrder.indexOf(a.dayOfWeek) - dayOrder.indexOf(b.dayOfWeek)
+      );
     } else {
       // 해당 월이 없으면 새로운 월 스케줄 추가
       updatedScheduleData.push({
