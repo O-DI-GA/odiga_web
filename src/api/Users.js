@@ -45,7 +45,6 @@ export const getData = async (url, token, data) => {
     });
     return response.data;
   } catch (error) {
-    console.error("API 요청 에러:", error);
     throw error;
   }
 };
@@ -64,7 +63,6 @@ export const postData = async (url, token, data) => {
     });
     return response.data;
   } catch (error) {
-    console.error("API 요청 에러:", error);
     throw error;
   }
 };
@@ -82,7 +80,6 @@ export const postWithFileData = async (url, token, data) => {
     });
     return response.data;
   } catch (error) {
-    console.error("API 요청 에러:", error);
     throw error;
   }
 };
@@ -101,7 +98,6 @@ export const updateData = async (url, token, data) => {
     });
     return response.data;
   } catch (error) {
-    console.error("API 요청 에러:", error);
     throw error;
   }
 };
@@ -120,7 +116,6 @@ export const deleteData = async (url, token, data) => {
     });
     return response.data;
   } catch (error) {
-    console.error("API 요청 에러:", error);
     throw error;
   }
 };
