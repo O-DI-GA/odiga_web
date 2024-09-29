@@ -13,6 +13,7 @@ const ReserveInsert = () => {
 
   const [selectedDays, setSelectedDays] = useState([]);
   const [scheduleData, setScheduleData] = useState([]);
+  const [year, setYear] = useState(2024);
   const [month, setMonth] = useState(9);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -27,62 +28,87 @@ const ReserveInsert = () => {
     }
   };
 
+  const dayKorToEng = {
+    월: "MONDAY",
+    화: "TUESDAY",
+    수: "WEDNESDAY",
+    목: "THURSDAY",
+    금: "FRIDAY",
+    토: "SATURDAY",
+    일: "SUNDAY",
+  };
+
+  const dayEngToKor = Object.fromEntries(
+    Object.entries(dayKorToEng).map(([kor, eng]) => [eng, kor])
+  );
+
   const handleAddSchedule = () => {
     const newSchedules = selectedDays.map((day) => ({
-      dayOfWeek: day,
+      year: year,
+      month: month,
+      dayOfWeek: dayKorToEng[day],
       startTime: startTime
-        ? startTime.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })
+        ? `${startTime.getHours().toString().padStart(2, "0")}:${startTime
+            .getMinutes()
+            .toString()
+            .padStart(2, "0")}`
         : "",
       endTime: endTime
-        ? endTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        ? `${endTime.getHours().toString().padStart(2, "0")}:${endTime
+            .getMinutes()
+            .toString()
+            .padStart(2, "0")}`
         : "",
       intervalMinutes,
     }));
 
-    const dayOrder = ["월", "화", "수", "목", "금", "토", "일"];
-
-    // 기존 month가 있으면 업데이트, 없으면 추가
+    const dayOrder = [
+      "MONDAY",
+      "TUESDAY",
+      "WEDNESDAY",
+      "THURSDAY",
+      "FRIDAY",
+      "SATURDAY",
+      "SUNDAY",
+    ];
     const updatedScheduleData = [...scheduleData];
-    const existingMonthIndex = updatedScheduleData.findIndex(
-      (schedule) => schedule.month === month
-    );
 
-    if (existingMonthIndex !== -1) {
-      // 해당 월의 스케줄이 존재할 때
-      newSchedules.forEach((newSchedule) => {
+    newSchedules.forEach((newSchedule) => {
+      const existingScheduleIndex = updatedScheduleData.findIndex(
+        (schedule) =>
+          schedule.year === newSchedule.year &&
+          schedule.month === newSchedule.month
+      );
+
+      if (existingScheduleIndex !== -1) {
         const existingDayIndex = updatedScheduleData[
-          existingMonthIndex
+          existingScheduleIndex
         ].daySchedules.findIndex(
           (daySchedule) => daySchedule.dayOfWeek === newSchedule.dayOfWeek
         );
 
         if (existingDayIndex !== -1) {
-          // 이미 존재하는 요일이면 기존 데이터를 덮어쓰기
-          updatedScheduleData[existingMonthIndex].daySchedules[
+          updatedScheduleData[existingScheduleIndex].daySchedules[
             existingDayIndex
           ] = newSchedule;
         } else {
-          // 중복된 요일이 없으면 새 데이터를 추가
-          updatedScheduleData[existingMonthIndex].daySchedules.push(
+          updatedScheduleData[existingScheduleIndex].daySchedules.push(
             newSchedule
           );
         }
-      });
 
-      // 요일 순으로 정렬
-      updatedScheduleData[existingMonthIndex].daySchedules.sort(
-        (a, b) => dayOrder.indexOf(a.dayOfWeek) - dayOrder.indexOf(b.dayOfWeek)
-      );
-    } else {
-      // 해당 월이 없으면 새로운 월 스케줄 추가
-      updatedScheduleData.push({
-        month: month,
-        daySchedules: newSchedules,
-      });
-    }
+        updatedScheduleData[existingScheduleIndex].daySchedules.sort(
+          (a, b) =>
+            dayOrder.indexOf(a.dayOfWeek) - dayOrder.indexOf(b.dayOfWeek)
+        );
+      } else {
+        updatedScheduleData.push({
+          year: newSchedule.year,
+          month: newSchedule.month,
+          daySchedules: [newSchedule],
+        });
+      }
+    });
 
     setScheduleData(updatedScheduleData);
     setSelectedDays([]);
@@ -121,6 +147,16 @@ const ReserveInsert = () => {
         <h2 className="title">예약 시간 등록</h2>
 
         <div className="monthSelection">
+          <select
+            value={year}
+            onChange={(e) => setYear(parseInt(e.target.value))}
+          >
+            {[2024, 2025].map((yr) => (
+              <option key={yr} value={yr}>
+                {yr}년
+              </option>
+            ))}
+          </select>
           <select
             value={month}
             onChange={(e) => setMonth(parseInt(e.target.value))}
@@ -199,10 +235,12 @@ const ReserveInsert = () => {
         <div className="scheduleList">
           {scheduleData.map((schedule, monthIndex) => (
             <div key={monthIndex} className="scheduleItem">
-              <h3>{schedule.month}월</h3>
+              <h3>
+                {schedule.year}년 {schedule.month}월
+              </h3>
               {schedule.daySchedules.map((daySchedule, dayIndex) => (
                 <div key={dayIndex} className="scheduleSubitem">
-                  <span>{daySchedule.dayOfWeek}요일</span>
+                  <span>{dayEngToKor[daySchedule.dayOfWeek]}요일</span>
                   <span>
                     {daySchedule.startTime} ~ {daySchedule.endTime}
                   </span>
