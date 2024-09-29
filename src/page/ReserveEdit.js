@@ -9,6 +9,7 @@ import {
   TimePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import "../css/ReserveEdit.css";
 
 const ReserveEdit = () => {
   const { storeId } = useParams();
@@ -48,30 +49,37 @@ const ReserveEdit = () => {
     }
   }, [selectedDate, storeId, token]);
 
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   const handleSaveChanges = async () => {
-    console.log("저장하는 날짜:", selectedDate);
     try {
-      const url = `/reservation/${storeId}`;
+      const url = `/reservation/${storeId}/availableReservationTime`;
+
       await updateData(url, token, {
         storeId: parseInt(storeId),
-        date: selectedDate.toISOString().split("T")[0], // "YYYY-MM-DD" 형식으로 변환
+        date: formatDate(selectedDate),
         newStartTime: startTime
-          ? startTime.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })
+          ? `${startTime.getHours().toString().padStart(2, "0")}:${startTime
+              .getMinutes()
+              .toString()
+              .padStart(2, "0")}`
           : "",
         newEndTime: endTime
-          ? endTime.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })
+          ? `${endTime.getHours().toString().padStart(2, "0")}:${endTime
+              .getMinutes()
+              .toString()
+              .padStart(2, "0")}`
           : "",
         intervalMinutes,
         isAvailable: true,
       });
       alert("예약 시간이 성공적으로 수정되었습니다.");
-      navigate(`/reserveinfo/${storeId}`);
+      navigate(`/menuinsert/${storeId}`);
     } catch (error) {
       console.error("예약 시간 수정 중 오류가 발생했습니다:", error);
       alert("예약 시간 수정 중 오류가 발생했습니다.");
@@ -80,46 +88,56 @@ const ReserveEdit = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <div>
-        <h2>예약 시간 수정</h2>
+      <div className="reserveEdit">
+        <h2 className="title">예약 시간 수정</h2>
 
-        <DatePicker
-          label="날짜 선택"
-          value={selectedDate}
-          onChange={(newDate) => {
-            setSelectedDate(newDate);
-            console.log("선택한 날짜: " + newDate);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
+        <div className="dateSelection">
+          <DatePicker
+            label="날짜 선택"
+            value={selectedDate}
+            onChange={(newDate) => {
+              setSelectedDate(newDate);
+            }}
+            renderInput={(params) => (
+              <TextField {...params} className="inputField" />
+            )}
+          />
+        </div>
 
-        <div>
+        <div className="timeSelection">
           <TimePicker
             label="시작 시간"
             value={startTime}
             onChange={(newStartTime) => setStartTime(newStartTime)}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => (
+              <TextField {...params} className="inputField" />
+            )}
           />
           <TimePicker
             label="종료 시간"
             value={endTime}
             onChange={(newEndTime) => setEndTime(newEndTime)}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => (
+              <TextField {...params} className="inputField" />
+            )}
           />
         </div>
 
-        <div>
-          <label>간격</label>
+        <div className="intervalSelection">
           <select
             value={intervalMinutes}
             onChange={(e) => setIntervalMinutes(parseInt(e.target.value))}
+            className="inputField"
           >
             <option value={30}>30분</option>
             <option value={60}>1시간</option>
           </select>
+          <label>간격</label>
         </div>
 
-        <Button onClick={handleSaveChanges}>변경 사항 저장</Button>
+        <button onClick={handleSaveChanges} className="saveButton">
+          변경 사항 저장
+        </button>
       </div>
     </LocalizationProvider>
   );

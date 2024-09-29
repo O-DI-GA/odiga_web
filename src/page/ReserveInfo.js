@@ -15,6 +15,7 @@ const ReserveInfo = () => {
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
   const [filteredTimes, setFilteredTimes] = useState([]);
+  const [selectedTime, setSelectedTime] = useState(null);
 
   useEffect(() => {
     const fetchReservationTimes = async () => {
@@ -42,11 +43,6 @@ const ReserveInfo = () => {
         return timeDate === selectedDate.toDateString();
       });
       setFilteredTimes(filtered);
-      console.log("선택한 날짜:", selectedDate.toDateString());
-      console.log(
-        "예약 가능한 시간:",
-        filtered.map((time) => formatTime(time.availableReservationTime))
-      );
     } else {
       setFilteredTimes([]);
     }
@@ -67,16 +63,19 @@ const ReserveInfo = () => {
     navigate(`/reserveedit/${storeId}`);
   };
 
-  const handleDelete = async (timeId) => {
+  const handleDelete = async () => {
+    if (!selectedTime) return;
+
     try {
-      const url = `/reservation/availableReservationTime/${timeId}`;
+      const url = `/reservation/availableReservationTime/${selectedTime}`;
       await deleteData(url, token);
       setReservationTimes(
         reservationTimes.filter(
-          (time) => time.availableReservationTimeId !== timeId
+          (time) => time.availableReservationTimeId !== selectedTime
         )
       );
       alert("예약 시간이 삭제되었습니다.");
+      setSelectedTime(null);
     } catch (error) {
       console.error("예약 시간 삭제 중 오류가 발생했습니다:", error);
       alert("예약 시간 삭제 중 오류가 발생했습니다.");
@@ -100,21 +99,49 @@ const ReserveInfo = () => {
           </button>
         </div>
       </div>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DatePicker
-          label="날짜 선택"
-          value={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
+      <div className="reserveInfoSection">
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+            label="날짜 선택"
+            value={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+        {selectedTime && (
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleDelete}
+            className="deleteButton"
+          >
+            선택한 시간 삭제
+          </Button>
+        )}
+      </div>
 
       <div className="timeContainer">
-        {filteredTimes.map((time) => (
-          <Button key={time.availableReservationTimeId} variant="outlined">
-            {formatTime(time.availableReservationTime)}
-          </Button>
-        ))}
+        {filteredTimes
+          .slice()
+          .sort(
+            (a, b) =>
+              new Date(a.availableReservationTime).getTime() -
+              new Date(b.availableReservationTime).getTime()
+          )
+          .map((time) => (
+            <Button
+              key={time.availableReservationTimeId}
+              variant="outlined"
+              onClick={() => setSelectedTime(time.availableReservationTimeId)}
+              className={
+                selectedTime === time.availableReservationTimeId
+                  ? "selectedTimeButton"
+                  : ""
+              }
+            >
+              {formatTime(time.availableReservationTime)}
+            </Button>
+          ))}
       </div>
     </div>
   );
