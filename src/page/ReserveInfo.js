@@ -121,20 +121,27 @@ const ReserveInfo = () => {
       </div>
 
       <div className="timeContainer">
-        {filteredTimes.map((time) => (
-          <Button
-            key={time.availableReservationTimeId}
-            variant="outlined"
-            onClick={() => setSelectedTime(time.availableReservationTimeId)}
-            className={
-              selectedTime === time.availableReservationTimeId
-                ? "selectedTimeButton"
-                : ""
-            }
-          >
-            {formatTime(time.availableReservationTime)}
-          </Button>
-        ))}
+        {filteredTimes
+          .slice()
+          .sort(
+            (a, b) =>
+              new Date(a.availableReservationTime).getTime() -
+              new Date(b.availableReservationTime).getTime()
+          )
+          .map((time) => (
+            <Button
+              key={time.availableReservationTimeId}
+              variant="outlined"
+              onClick={() => setSelectedTime(time.availableReservationTimeId)}
+              className={
+                selectedTime === time.availableReservationTimeId
+                  ? "selectedTimeButton"
+                  : ""
+              }
+            >
+              {formatTime(time.availableReservationTime)}
+            </Button>
+          ))}
       </div>
     </div>
   );
