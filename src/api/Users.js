@@ -102,6 +102,23 @@ export const updateData = async (url, token, data) => {
   }
 };
 
+export const updateWithFileData = async (url, token, data) => {
+  try {
+    const response = await baseInstance({
+      method: "PUT",
+      url: url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //DELETE
 export const deleteData = async (url, token, data) => {
   try {
