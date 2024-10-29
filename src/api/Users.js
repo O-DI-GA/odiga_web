@@ -15,10 +15,8 @@ export const postLogin = async (userInfo, dispatch) => {
     return true;
   } catch (error) {
     if (error.response && error.response.status === 401) {
-      alert("비밀번호가 일치하지 않습니다.");
-    }
-    if (error.response && error.response.status === 404) {
-      alert("존재하지 않는 계정입니다.");
+      // console.log(error.response.data.errorMessage);
+      alert(error.response.data.errorMessage);
     }
     return false;
   }
@@ -28,6 +26,22 @@ export const postLogin = async (userInfo, dispatch) => {
 export const doLogout = (dispatch) => {
   dispatch(DELETE_TOKEN()); //accessToken store에서 제거
   dispatch(DELETE_USER()); // 사용자 이름 store에서 제거
+};
+
+// 회원가입
+export const postRegister = async (registerInfo) => {
+  try {
+    const response = await userInstance.post("/signup", registerInfo);
+    if (response.status === 201) {
+      alert("회원가입 성공!");
+    }
+    return true;
+  } catch (error) {
+    if (error.response && error.response.status === 409) {
+      alert(error.response.data.errorMessage);
+    }
+    return false;
+  }
 };
 
 /* 토큰 필요 API 통신 */
