@@ -7,6 +7,7 @@ import ShopList from "./page/ShopList";
 import ShopDetail from "./page/ShopDetail";
 import ReserveInsert from "./page/ReserveInsert";
 import ReserveEdit from "./page/ReserveEdit";
+import SignUp from "./page/auth/SignUp";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -20,6 +21,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={accessToken ? <Home /> : <Login />} />
+      <Route path="/signup" Component={SignUp}/>
       {/* <Route path="/login" Component={Login} /> */}
       <Route path="/menuinsert/:id" Component={ShopDetail} />
       <Route path="/shopinsert" Component={ShopInsert} />
