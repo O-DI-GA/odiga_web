@@ -10,11 +10,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 
+import Header from "../component/Header";
+
 // import MenuInsert from "../page/MenuInsert";
 import CategoryMenuList from "./CategoryMenuList";
 import TableSetting from "./TableSetting";
 import ReserveInfo from "./ReserveInfo";
 import UpdateStore from "./UpdateStore";
+import Analysis from "./Analysis";
 
 const drawerWidth = 240;
 
@@ -38,6 +41,7 @@ function ShopDetail(props) {
       <Divider />
       <List>
         {[
+          "매출 분석",
           "카테고리 및 메뉴 등록",
           "테이블 정보 등록",
           "예약 정보",
@@ -58,6 +62,9 @@ function ShopDetail(props) {
 
   const renderContent = () => {
     switch (selectedTab) {
+      case "매출 분석":
+        return <Analysis />;
+      case "가게 정보":
       case "카테고리 및 메뉴 등록":
         return <CategoryMenuList />;
       case "테이블 정보 등록":
@@ -75,56 +82,64 @@ function ShopDetail(props) {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      >
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
+    <>
+        <Header/>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <Box
+          component="nav"
           sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+            width: { sm: drawerWidth },
+            flexShrink: { sm: 0 },
+            zIndex : 1200
         }}
-      >
-        {renderContent()}
+          aria-label="mailbox folders"
+        >
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true,
+            }}
+            sx={{
+              display: { xs: "block", sm: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
+              zIndex: 1300
+            }}
+          >
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: "none", sm: "block" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Box>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+          }}
+        >
+          {renderContent()}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 
