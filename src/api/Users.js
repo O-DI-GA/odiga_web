@@ -1,6 +1,6 @@
 import { baseInstance, userInstance } from "./customAxios";
-import { SET_USER, DELETE_USER } from "../store/User";
 import { SET_TOKEN, DELETE_TOKEN } from "../store/Auth";
+import { DELETE_STOREID } from '../store/User';
 
 // 로그인
 export const postLogin = async (userInfo, dispatch) => {
@@ -8,8 +8,7 @@ export const postLogin = async (userInfo, dispatch) => {
     const response = await userInstance.post("/login", userInfo);
     if (response.status === 200) {
       // 이름 accessToken store에 저장
-      const { ownerName, accessToken } = response.data.data;
-      dispatch(SET_USER({ ownerName }));
+      const { accessToken } = response.data.data;
       dispatch(SET_TOKEN({ accessToken }));
     }
     return true;
@@ -25,7 +24,7 @@ export const postLogin = async (userInfo, dispatch) => {
 // 로그아웃
 export const doLogout = (dispatch) => {
   dispatch(DELETE_TOKEN()); //accessToken store에서 제거
-  dispatch(DELETE_USER()); // 사용자 이름 store에서 제거
+  dispatch(DELETE_STOREID()); // 사용자 이름 store에서 제거
 };
 
 // 회원가입

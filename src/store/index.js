@@ -13,7 +13,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     authToken: tokenReducer,
-    userToken: userReducer,
+    storeInfo: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

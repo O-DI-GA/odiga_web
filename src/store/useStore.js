@@ -11,3 +11,9 @@ export function useAuthenticated() {
   const authenticated = useSelector((state) => state.authToken.authenticated);
   return authenticated;
 }
+
+// storeID 반환
+export function useStoreId() {
+  const storeId = useSelector((state) => state.storeInfo.storeId);
+  return storeId || "";
+}
