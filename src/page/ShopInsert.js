@@ -140,7 +140,11 @@ function ShopInsert() {
           />
         </div>
         <div className="shopInsertFormItem shopInsertButtonContainer">
-          <button type="button" className="shopInsertButton shopInsertBack">
+          <button
+            type="button"
+            className="shopInsertButton shopInsertBack"
+            onClick={() => navigate("/")}
+          >
             취소
           </button>
           <button type="submit" className="shopInsertButton shopInsertSubmit">

@@ -10,13 +10,24 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
+import logoImage from "../../assets/logo.png";
 
 const defaultTheme = createTheme();
 
 const SubmitBtn = styled.button`
-  background-color: #06d1af;
+  background-color: #ffa04c;
   border: none;
-  color: white;
+  color: black;
+  width: -webkit-fill-available;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 30px;
+`;
+
+const CancelBtn = styled.button`
+  background-color: #fcc953;
+  border: none;
+  color: black;
   width: -webkit-fill-available;
   height: 40px;
   border-radius: 5px;
@@ -43,7 +54,7 @@ function SignUp() {
       setError("모든 필드를 입력해 주세요.");
       return;
     }
-    
+
     if (userData.password !== passwordCheck) {
       setError("비밀번호와 일치하지 않습니다.");
       return;
@@ -83,6 +94,7 @@ function SignUp() {
             alignItems: "center",
           }}
         >
+          <img src={logoImage} alt="logo" style={{ width: "8rem" }}></img>
           <Typography component="h1" variant="h5">
             <b>REGISTER</b>
           </Typography>
@@ -138,7 +150,7 @@ function SignUp() {
               onChange={onChange}
             />
             <SubmitBtn type="submit">회원가입</SubmitBtn>
-            <SubmitBtn onClick={() => navigate("/")}>이전으로</SubmitBtn>
+            <CancelBtn onClick={() => navigate("/")}>이전으로</CancelBtn>
           </Box>
         </Box>
       </Container>

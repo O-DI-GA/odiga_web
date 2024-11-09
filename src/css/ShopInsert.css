@@ -1,5 +1,6 @@
 .shopInsert {
   display: flex;
+  background-color: #f4f4f4;
   flex-direction: column;
   padding: 50px;
   align-items: center;
@@ -7,6 +8,7 @@
 
 .shopInsertForm {
   display: flex;
+  background-color: #fff;
   flex-direction: column;
   gap: 20px;
   border: 1px solid rgb(202, 202, 202);
@@ -52,11 +54,11 @@
 }
 
 .shopInsertBack {
-  background-color: #d5e5f3;
+  background-color: #FCC953;
   border: none;
 }
 
 .shopInsertSubmit {
-  background-color: #2d9cdb;
+  background-color: #FFA04C;
   border: none;
 }
