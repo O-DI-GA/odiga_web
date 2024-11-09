@@ -17,9 +17,19 @@ import { useNavigate } from "react-router-dom";
 const defaultTheme = createTheme();
 
 const SubmitBtn = styled.button`
-  background-color: #06d1af;
+  background-color: #ffa04c;
   border: none;
-  color: white;
+  color: black;
+  width: -webkit-fill-available;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 30px;
+`;
+
+const CancelBtn = styled.button`
+  background-color: #fcc953;
+  border: none;
+  color: black;
   width: -webkit-fill-available;
   height: 40px;
   border-radius: 5px;
@@ -72,7 +82,8 @@ export default function Login() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}>
+          }}
+        >
           <img src={logoImage} alt="logo" style={{ width: "8rem" }}></img>
           <Typography component="h1" variant="h5">
             <b>LOGIN</b>
@@ -81,7 +92,8 @@ export default function Login() {
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 1 }}>
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -105,7 +117,9 @@ export default function Login() {
               onChange={onChange}
             />
             <SubmitBtn type="submit">로그인</SubmitBtn>
-            <SubmitBtn onClick={() => navigate("/signup")}>회원가입 하러가기</SubmitBtn>
+            <CancelBtn onClick={() => navigate("/signup")}>
+              회원가입 하러가기
+            </CancelBtn>
           </Box>
         </Box>
       </Container>
