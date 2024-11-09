@@ -1,0 +1,48 @@
+.header {
+    display : flex;
+    position : fixed;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    z-index : 1600 !important;
+    background-color : #fff;
+    gap : 40rem;
+    width : 100%;
+}
+
+.left-box{
+    display : flex;
+    flex-direction: row;
+    align-items: center;
+    gap : 50px;
+}
+
+.logo{
+    width : 150px;
+    margin: 10px 25px;
+}
+
+.navigation-bar{
+    gap : 100px;
+}
+
+.right-box{
+    display : flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right : 40px;
+}
+
+.hello-txt{
+    margin : 0;
+}
+
+.logout-box{
+    margin-left : 20px;
+}
+
+.logout-txt{
+    margin : 0;
+    color : #A8A8A8;
+    cursor : pointer;
+}
