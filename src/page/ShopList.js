@@ -17,7 +17,7 @@ const ShopList = () => {
   useEffect(() => {
     const fetchShops = async () => {
       try {
-        const response = await getData(`${URL}/api/v1/owner/store`, token);
+        const response = await getData('/store', token);
         if (response.httpStatusCode === 200) {
           setShops(response.data); // 성공 시 데이터 설정
         } else {
