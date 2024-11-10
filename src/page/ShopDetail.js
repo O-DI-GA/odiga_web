@@ -11,20 +11,31 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 
 import Header from "../component/Header";
-
-// import MenuInsert from "../page/MenuInsert";
 import CategoryMenuList from "./CategoryMenuList";
 import TableSetting from "./TableSetting";
 import ReserveInfo from "./ReserveInfo";
 import UpdateStore from "./UpdateStore";
 import Analysis from "./Analysis";
 
-const drawerWidth = 240;
+import styled from "styled-components";
+
+const StyledContainer = styled.div`
+  margin-top: 70px;
+`;
+
+const RenderContent = styled.div`
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+`;
+
+const drawerWidth = 220;
 
 function ShopDetail(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [selectedTab, setSelectedTab] = React.useState("카테고리 및 메뉴 등록");
+  const [selectedTab, setSelectedTab] = React.useState("매출 분석");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -36,9 +47,7 @@ function ShopDetail(props) {
   };
 
   const drawer = (
-    <div style={{ zIndex: "1040" }}>
-      <Toolbar />
-      <Divider />
+    <div>
       <List>
         {[
           "매출 분석",
@@ -64,35 +73,31 @@ function ShopDetail(props) {
     switch (selectedTab) {
       case "매출 분석":
         return <Analysis />;
-      case "가게 정보":
       case "카테고리 및 메뉴 등록":
         return <CategoryMenuList />;
       case "테이블 정보 등록":
         return <TableSetting />;
-      case "사장 정보":
-        return <div>사장 정보 페이지 내용</div>;
       case "예약 정보":
         return <ReserveInfo />;
       case "가게 정보 수정":
         return <UpdateStore />;
-      case "결제 정보":
       default:
         return null;
     }
   };
 
   return (
-    <>
-        <Header/>
+    <StyledContainer>
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
+        {/* <CssBaseline /> */}
         <Box
           component="nav"
           sx={{
             width: { sm: drawerWidth },
             flexShrink: { sm: 0 },
-            zIndex : 1200
-        }}
+            zIndex: 1200,
+            backgroundColor: "#f4f4f4",
+          }}
           aria-label="mailbox folders"
         >
           <Drawer
@@ -108,8 +113,11 @@ function ShopDetail(props) {
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
                 width: drawerWidth,
+                margin: "5rem 20px",
+                borderRadius: "10px", // 둥근 테두리
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", // 그림자 추가
+                height: "auto",
               },
-              zIndex: 1300
             }}
           >
             {drawer}
@@ -121,6 +129,10 @@ function ShopDetail(props) {
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
                 width: drawerWidth,
+                borderRadius: "10px", // 둥근 테두리
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", // 그림자 추가
+                height: "auto",
+                margin: "5rem 20px",
               },
             }}
             open
@@ -132,14 +144,16 @@ function ShopDetail(props) {
           component="main"
           sx={{
             flexGrow: 1,
-            p: 3,
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
+            padding: "10px 35px 0px 50px",
+            width: { sm: `calc(100% - ${drawerWidth + 32}px)` }, // 좌우 마진에 따른 너비 조정
+            backgroundColor: "#F4F4F4",
+            minHeight: "100vh",
           }}
         >
-          {renderContent()}
+          <RenderContent>{renderContent()}</RenderContent>
         </Box>
       </Box>
-    </>
+    </StyledContainer>
   );
 }
 

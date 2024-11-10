@@ -4,6 +4,7 @@
   flex-direction: column;
   padding: 50px;
   align-items: center;
+  margin-top: 70px;
 }
 
 .shopInsertForm {
@@ -26,7 +27,7 @@
   align-items: center;
 }
 
-.shopInsertFormItem>label {
+.shopInsertFormItem > label {
   width: 160px;
   font-size: large;
 }
@@ -54,11 +55,11 @@
 }
 
 .shopInsertBack {
-  background-color: #FCC953;
+  background-color: #fcc953;
   border: none;
 }
 
 .shopInsertSubmit {
-  background-color: #FFA04C;
+  background-color: #ffa04c;
   border: none;
 }
