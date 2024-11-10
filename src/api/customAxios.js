@@ -20,7 +20,7 @@ const axiosAPI = (options) => {
     (error) => {
       if (error.response && error.response.status === 401) {
         alert("로그인이 필요합니다.");
-        window.location.href = "/";
+        window.location.href = "/login";
         store.dispatch(DELETE_TOKEN()); // 401 에러 발생 시 로그아웃 처리
       }
       return Promise.reject(error);
