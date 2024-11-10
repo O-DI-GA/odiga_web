@@ -320,7 +320,7 @@ export default function CategoryMenuList() {
   }
 
   return (
-    <div style={{ marginTop: "40px" }}>
+    <div>
       {/* 카테고리 */}
       <Container style={{ marginBottom: "30px" }}>
         <Row xs="auto">
