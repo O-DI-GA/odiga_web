@@ -9,9 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { TextField, Button } from "@mui/material";
+import DateRangePicker from "./DateRangePicker";
 import "../css/MenuSalesAnalysis.css";
 
 ChartJS.register(
@@ -53,6 +51,11 @@ const MenuSalesAnalysis = () => {
     ],
   };
 
+  const handleDateChange = (type, newDate) => {
+    if (type === "start") setStartDate(newDate);
+    else if (type === "end") setEndDate(newDate);
+  };
+
   const sortedBySalesAmount = [...menuData].sort(
     (a, b) => b.totalSalesAmount - a.totalSalesAmount
   );
@@ -67,37 +70,11 @@ const MenuSalesAnalysis = () => {
     <div className="menuSalesAnalysis">
       <div className="titleContainer">
         <h2>메뉴 별 매출 분석</h2>
-        <Button
-          variant="contained"
-          onClick={() => setDatePickerVisible(!isDatePickerVisible)}
-          className="datePickerButton"
-          style={{ backgroundColor: "#D9D9D9", color: "#000" }}
-        >
-          기간 설정
-        </Button>
-        {isDatePickerVisible && (
-          <div className="datePickerContainer">
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="시작일"
-                value={startDate}
-                onChange={(newDate) => setStartDate(newDate)}
-                renderInput={(params) => (
-                  <TextField {...params} margin="normal" />
-                )}
-              />
-              <DatePicker
-                label="종료일"
-                value={endDate}
-                onChange={(newDate) => setEndDate(newDate)}
-                minDate={startDate}
-                renderInput={(params) => (
-                  <TextField {...params} margin="normal" />
-                )}
-              />
-            </LocalizationProvider>
-          </div>
-        )}
+        <DateRangePicker
+          startDate={startDate}
+          endDate={endDate}
+          onDateChange={handleDateChange}
+        />
       </div>
       <div className="menuAnalysisContainer">
         <div className="menuSalesGraph">

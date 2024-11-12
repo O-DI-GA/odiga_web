@@ -12,19 +12,6 @@
   height: 50px;
 }
 
-.datePickerButton {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #dadada;
-  color: #000;
-}
-
-.datePickerContainer {
-  display: flex;
-  gap: 15px;
-}
-
 .menuAnalysisContainer {
   display: flex;
   flex-direction: row;
