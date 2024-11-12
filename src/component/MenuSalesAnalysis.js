@@ -9,6 +9,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { TextField, Button } from "@mui/material";
 import "../css/MenuSalesAnalysis.css";
 
 ChartJS.register(
@@ -22,8 +25,9 @@ ChartJS.register(
 
 const MenuSalesAnalysis = () => {
   const [menuData, setMenuData] = useState([]);
-  const [startDate, setStartDate] = useState("2024-01-01");
-  const [endDate, setEndDate] = useState("2024-01-31");
+  const [startDate, setStartDate] = useState(new Date("2024-01-01"));
+  const [endDate, setEndDate] = useState(new Date("2024-01-31"));
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
   useEffect(() => {
     const dummyData = [
@@ -63,7 +67,37 @@ const MenuSalesAnalysis = () => {
     <div className="menuSalesAnalysis">
       <div className="titleContainer">
         <h2>메뉴 별 매출 분석</h2>
-        <button>기간 설정</button>
+        <Button
+          variant="contained"
+          onClick={() => setDatePickerVisible(!isDatePickerVisible)}
+          className="datePickerButton"
+          style={{ backgroundColor: "#D9D9D9", color: "#000" }}
+        >
+          기간 설정
+        </Button>
+        {isDatePickerVisible && (
+          <div className="datePickerContainer">
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="시작일"
+                value={startDate}
+                onChange={(newDate) => setStartDate(newDate)}
+                renderInput={(params) => (
+                  <TextField {...params} margin="normal" />
+                )}
+              />
+              <DatePicker
+                label="종료일"
+                value={endDate}
+                onChange={(newDate) => setEndDate(newDate)}
+                minDate={startDate}
+                renderInput={(params) => (
+                  <TextField {...params} margin="normal" />
+                )}
+              />
+            </LocalizationProvider>
+          </div>
+        )}
       </div>
       <div className="menuAnalysisContainer">
         <div className="menuSalesGraph">
@@ -85,9 +119,20 @@ const MenuSalesAnalysis = () => {
         </div>
       </div>
       <p className="menuAnalysisText">
-        {startDate}부터 {endDate}까지 {first?.name}가 {first?.totalSalesCount}
-        개로 가장 인기 있었어요! 🎉 <br />그 뒤로는 {second?.name}과{" "}
-        {third?.name}이 꾸준히 선택받았어요 <br />
+        {startDate.toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+        부터{" "}
+        {endDate.toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+        까지 {first?.name}가 {first?.totalSalesCount}개로 가장 인기 있었어요! 🎉
+        <br />그 뒤로는 {second?.name}과 {third?.name}이 꾸준히 선택받았어요
+        <br />
         다음 기간에는 또 어떤 메뉴가 인기 있을지 기대되네요! 👀
       </p>
     </div>
