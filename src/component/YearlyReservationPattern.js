@@ -53,8 +53,9 @@ const YearlyReservationPattern = () => {
     fetchData();
   }, [storeId, token]);
 
-  const selectedYearData =
-    reservationData[selectedYear.replace("년", "")] || [];
+  const selectedYearData = (
+    reservationData[selectedYear.replace("년", "")] || []
+  ).sort((a, b) => parseInt(a.month) - parseInt(b.month));
 
   const noDataMessage = `${selectedYear}에는 예약이 없어요🙁`;
 
