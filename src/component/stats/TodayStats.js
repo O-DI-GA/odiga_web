@@ -3,6 +3,7 @@
 import React from "react";
 import { getData } from "../../api/Users";
 import { useAccessToken, useStoreId } from "../../store/useStore";
+import "../../css/TodayStats.css";
 
 export default function TodayStats() {
   const token = useAccessToken().accessToken;
@@ -135,19 +136,25 @@ export default function TodayStats() {
   }, []);
 
   return (
-    <div>
+    <div className="today-state">
       <h5> 오늘 매출 현황 </h5>
-      <div>
-        <p> ��� 매출�� : {todayStats.totalSalesAmount} won </p>
-      </div>
-      <div>
-        <p> 방문자 수 : {todayStats.visitCount} </p>
-      </div>
-      <div>
-        <p> ��이�� 수 : {todayStats.waitingCount} </p>
-      </div>
-      <div>
-        <p> 인기 메��� : {todayStats.bestMenu} </p>
+      <div className="today-box-container">
+        <div className="today-box">
+          <p className="value">{todayStats.totalSalesAmount} 원 </p>
+          <p>오늘 매출액</p>
+        </div>
+        <div className="today-box">
+          <p className="value">{todayStats.visitCount} 명</p>
+          <p>오늘 방문자 수</p>
+        </div>
+        <div className="today-box">
+          <p className="value"> {todayStats.waitingCount} 건</p>
+          <p> 오늘 웨이팅 수</p>
+        </div>
+        <div className="today-box">
+          <p className="value">{todayStats.bestMenu} </p>
+          <p> 오늘 인기 메뉴 </p>
+        </div>
       </div>
     </div>
   );
