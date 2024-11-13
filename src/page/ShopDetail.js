@@ -1,16 +1,12 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
 
-import Header from "../component/Header";
 import CategoryMenuList from "./CategoryMenuList";
 import TableSetting from "./TableSetting";
 import ReserveInfo from "./ReserveInfo";
@@ -21,13 +17,6 @@ import styled from "styled-components";
 
 const StyledContainer = styled.div`
   margin-top: 70px;
-`;
-
-const RenderContent = styled.div`
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 `;
 
 const drawerWidth = 220;
@@ -89,7 +78,6 @@ function ShopDetail(props) {
   return (
     <StyledContainer>
       <Box sx={{ display: "flex" }}>
-        {/* <CssBaseline /> */}
         <Box
           component="nav"
           sx={{
@@ -150,7 +138,7 @@ function ShopDetail(props) {
             minHeight: "100vh",
           }}
         >
-          <RenderContent>{renderContent()}</RenderContent>
+          <div>{renderContent()}</div>
         </Box>
       </Box>
     </StyledContainer>
