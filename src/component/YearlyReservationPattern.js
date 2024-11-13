@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, MenuItem } from "@mui/material";
 import { Line } from "react-chartjs-2";
 import {
@@ -12,6 +12,8 @@ import {
   Legend,
 } from "chart.js";
 import "../css/YearlyReservationPattern.css";
+import { getRequest } from "../api/Users";
+import { useStoreId, useAccessToken } from "../store/useStore";
 
 ChartJS.register(
   CategoryScale,
@@ -25,26 +27,36 @@ ChartJS.register(
 
 const YearlyReservationPattern = () => {
   const [selectedYear, setSelectedYear] = useState("2024년");
+  const [reservationData, setReservationData] = useState([]);
 
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
   };
 
-  const dummyData = {
-    2024: [
-      { month: "9", reservationCount: 6 },
-      { month: "10", reservationCount: 9 },
-    ],
-    2023: [
-      { month: "1", reservationCount: 2 },
-      { month: "2", reservationCount: 5 },
-      { month: "5", reservationCount: 3 },
-      { month: "10", reservationCount: 2 },
-    ],
-    2022: [{ month: "1", reservationCount: 5 }],
-  };
+  const storeId = useStoreId();
+  const token = useAccessToken().accessToken;
 
-  const selectedYearData = dummyData[selectedYear.replace("년", "")] || [];
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!storeId || !token) return;
+
+      try {
+        const url = `/store/${storeId}/analysis/reservation-counts`;
+        const response = await getRequest(url, token);
+        console.log("연간 예약 데이터:", response.data);
+        setReservationData(response.data);
+      } catch (error) {
+        console.error("데이터를 불러오는 중 오류가 발생했습니다:", error);
+      }
+    };
+
+    fetchData();
+  }, [storeId, token]);
+
+  const selectedYearData =
+    reservationData[selectedYear.replace("년", "")] || [];
+
+  const noDataMessage = `${selectedYear}에는 예약이 없어요🙁`;
 
   const maxReservation = Math.max(
     ...selectedYearData.map((item) => item.reservationCount)
@@ -73,6 +85,29 @@ const YearlyReservationPattern = () => {
     ],
   };
 
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "시간",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "인원 수",
+        },
+      },
+    },
+  };
+
   return (
     <div className="yearlyReservationPattern">
       <div className="titleContainer">
@@ -97,12 +132,16 @@ const YearlyReservationPattern = () => {
         </div>
       </div>
       <div className="yearlyGraph">
-        <Line data={yearlyReservationData} options={{ responsive: true }} />
+        <Line data={yearlyReservationData} options={chartOptions} />
       </div>
-      <p className="yearlyText">
-        {selectedYear} 예약 패턴을 보면, {maxMonth}월에 예약 건수가 가장 많고{" "}
-        {minMonth}월에 가장 적은 것으로 나타났어요.
-      </p>
+      {selectedYearData.length > 0 ? (
+        <p className="yearlyText">
+          {selectedYear} 예약 패턴을 보면, {maxMonth}월에 예약 건수가 가장 많고{" "}
+          {minMonth}월에 가장 적은 것으로 나타났어요.
+        </p>
+      ) : (
+        <p className="yearlyText">{noDataMessage}</p>
+      )}
     </div>
   );
 };
