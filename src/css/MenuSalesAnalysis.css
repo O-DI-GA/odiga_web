@@ -46,8 +46,22 @@
   align-items: center;
 }
 
-.rankIndex {
-  flex: 1;
+.medal-1 {
+  color: gold;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.medal-2 {
+  color: silver;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.medal-3 {
+  color: #cd7f32;
+  font-size: 20px;
+  margin-right: 5px;
 }
 
 .menuName {
@@ -55,7 +69,7 @@
 }
 
 .salesAmount {
-  flex: 1;
+  flex: 2;
   text-align: right;
 }
 

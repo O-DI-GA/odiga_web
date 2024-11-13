@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import DateRangePicker from "./DateRangePicker";
+import { FaMedal } from "react-icons/fa";
 import "../css/MenuSalesAnalysis.css";
 
 ChartJS.register(
@@ -85,7 +86,7 @@ const MenuSalesAnalysis = () => {
           <ul>
             {top3Menus.map((item, index) => (
               <li key={item.name}>
-                <span className="rankIndex">{index + 1}</span>
+                <FaMedal className={`medal-${index + 1}`} />
                 <span className="menuName">{item.name}</span>
                 <span className="salesAmount">
                   {item.totalSalesAmount.toLocaleString()}원
