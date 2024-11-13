@@ -12,6 +12,13 @@
   height: 50px;
 }
 
+.periodContainer {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  align-items: center;
+}
+
 .timeGraphContainer {
   display: flex;
   flex-direction: row;
@@ -48,6 +55,7 @@
   padding: 20px;
   font-size: large;
   margin-top: 10px;
+  margin-bottom: 0px;
 }
 
 .timeAnalysisText {
