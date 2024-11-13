@@ -1,0 +1,66 @@
+.timePeriodAnalysis {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  height: 50px;
+}
+
+.periodContainer {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  align-items: center;
+}
+
+.timeGraphContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.timeVisitGraph {
+  flex: 1;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.timeWaitingGraph {
+  flex: 1;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.timeTextContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.timeText {
+  flex: 1;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: large;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.timeAnalysisText {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: large;
+}

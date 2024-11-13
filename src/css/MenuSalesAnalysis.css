@@ -1,0 +1,81 @@
+.menuSalesAnalysis {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  height: 50px;
+}
+
+.menuAnalysisContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.menuSalesGraph {
+  flex: 5;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.menuRank {
+  flex: 2;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.menuRank ul {
+  padding: 0;
+}
+
+.menuRank li {
+  list-style-type: none;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.medal-1 {
+  color: gold;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.medal-2 {
+  color: silver;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.medal-3 {
+  color: #cd7f32;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.menuName {
+  flex: 2;
+}
+
+.salesAmount {
+  flex: 2;
+  text-align: right;
+}
+
+.menuAnalysisText {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: large;
+}
