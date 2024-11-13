@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAccessToken } from "../store/useStore";
 import { getData, updateData } from "../api/Users";
 import { Button, TextField } from "@mui/material";
@@ -9,10 +9,13 @@ import {
   TimePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { useStoreId } from "../store/useStore";
 import "../css/ReserveEdit.css";
 
 const ReserveEdit = () => {
-  const { storeId } = useParams();
+  // const { storeId } = useParams();
+
+  const storeId = useStoreId();
   const token = useAccessToken().accessToken;
   const navigate = useNavigate();
 

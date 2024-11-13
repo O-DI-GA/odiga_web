@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 
 // 부트스트랩 import
 import "bootstrap/dist/css/bootstrap.css";
@@ -13,14 +12,15 @@ import Form from "react-bootstrap/Form";
 
 import "../css/MenuInsert.css";
 
-import { useAccessToken } from "../store/useStore";
+import { useAccessToken, useStoreId } from "../store/useStore";
 import { getData, postData, postWithFileData } from "../api/Users";
 
 export default function CategoryMenuList() {
   const accessToken = useAccessToken().accessToken;
 
   // storeId 설정
-  const { id: storeId } = useParams();
+  // const { id: storeId } = useParams();
+  const storeId = useStoreId();
 
   // 카테고리 설정
   const [categoryList, setCategoryList] = React.useState([]);

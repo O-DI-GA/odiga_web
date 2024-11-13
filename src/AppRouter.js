@@ -24,7 +24,7 @@ export default function AppRoutes() {
       <Routes>
         <Route
           path="/"
-          element={accessToken ? <Home /> : <Navigate to="/login" />}
+          element={accessToken ? <ShopDetail /> : <Navigate to="/login" />}
         />
         <Route
           path="/login"
@@ -34,7 +34,7 @@ export default function AppRoutes() {
           path="/signup"
           element={accessToken ? <Navigate to="/" /> : <SignUp />}
         />
-        <Route path="/menuinsert/:id" element={<ShopDetail />} />
+        <Route path="/shopStats" element={<ShopDetail />} />
         <Route path="/shopinsert" element={<ShopInsert />} />
         <Route path="/shoplist" element={<ShopList />} />
         <Route path="/reserveinsert/:storeId" element={<ReserveInsert />} />

@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
@@ -8,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { useAccessToken } from "../store/useStore";
+import { useAccessToken, useStoreId } from "../store/useStore";
 import { getData, postData, updateData } from "../api/Users";
 
 import "../css/TableSetting.css";
@@ -26,7 +25,8 @@ export default function TableSetting() {
   const accessToken = useAccessToken().accessToken;
 
   // storeId 설정
-  const { id: storeId } = useParams();
+  // const { id: storeId } = useParams();
+  const storeId = useStoreId();
 
   // 변수 설정
   const [tableData, setTableData] = React.useState([]);
