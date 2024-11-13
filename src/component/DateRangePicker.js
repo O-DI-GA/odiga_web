@@ -7,9 +7,15 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
   return (
-    <div style={{ display: "flex", gap: "15px", height: "50px" }}>
+    <div
+      style={{
+        display: "flex",
+        gap: "15px",
+        height: "50px",
+        alignItems: "center",
+      }}
+    >
       <Button
-        variant="contained"
         onClick={() => setDatePickerVisible(!isDatePickerVisible)}
         style={{
           backgroundColor: "#D9D9D9",
@@ -17,6 +23,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
           padding: "10px",
           borderRadius: "5px",
           border: "none",
+          height: "30px",
         }}
       >
         기간 설정
