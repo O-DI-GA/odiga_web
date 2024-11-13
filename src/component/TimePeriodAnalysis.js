@@ -12,6 +12,8 @@ import {
 } from "chart.js";
 import "../css/TimePeriodAnalysis.css";
 import { Button, Select, MenuItem } from "@mui/material";
+import { getData } from "../api/Users";
+import { useStoreId, useAccessToken } from "../store/useStore";
 
 ChartJS.register(
   CategoryScale,
@@ -29,69 +31,43 @@ const TimePeriodAnalysis = () => {
   const [visitPercentage, setVisitPercentage] = useState(0);
   const [selectedPeriod, setSelectedPeriod] = useState("오늘");
 
-  const todayVisitData = [
-    { hour: "10:00", visitCount: 2 },
-    { hour: "11:00", visitCount: 3 },
-    { hour: "12:00", visitCount: 5 },
-    { hour: "13:00", visitCount: 7 },
-    { hour: "14:00", visitCount: 4 },
-    { hour: "15:00", visitCount: 3 },
-    { hour: "16:00", visitCount: 6 },
-    { hour: "17:00", visitCount: 2 },
-  ];
+  const storeId = useStoreId();
+  const tokenObject = useAccessToken();
+  const token = tokenObject.accessToken;
 
-  const todayWaitingData = [
-    { hour: "10:00", waitingCount: 5 },
-    { hour: "11:00", waitingCount: 8 },
-    { hour: "12:00", waitingCount: 10 },
-    { hour: "13:00", waitingCount: 9 },
-    { hour: "14:00", waitingCount: 1 },
-    { hour: "15:00", waitingCount: 3 },
-    { hour: "16:00", waitingCount: 6 },
-    { hour: "17:00", waitingCount: 5 },
-  ];
+  const fetchTodayData = async () => {
+    try {
+      const visitUrl = `/store/${storeId}/analysis/today-hourly-visit-counts`;
+      const waitingUrl = `/store/${storeId}/analysis/today-hourly-waiting-counts`;
+      const visitResponse = await getData(visitUrl, token);
+      const waitingResponse = await getData(waitingUrl, token);
 
-  const monthlyVisitData = {
-    "2024-10": [
-      { hour: "10:00", visitCount: 1 },
-      { hour: "11:00", visitCount: 2 },
-      { hour: "12:00", visitCount: 3 },
-      { hour: "13:00", visitCount: 1 },
-      { hour: "14:00", visitCount: 2 },
-    ],
-    "2024-11": [
-      { hour: "10:00", visitCount: 4 },
-      { hour: "11:00", visitCount: 3 },
-      { hour: "12:00", visitCount: 6 },
-      { hour: "13:00", visitCount: 2 },
-      { hour: "14:00", visitCount: 3 },
-    ],
+      setVisitData(visitResponse.data);
+      setWaitingData(waitingResponse.data);
+    } catch (error) {
+      console.error("오늘 시간대별 데이터 불러오기 오류:", error);
+    }
   };
 
-  const monthlyWaitingData = {
-    "2024-10": [
-      { hour: "10:00", waitingCount: 2.0 },
-      { hour: "11:00", waitingCount: 4.0 },
-      { hour: "12:00", waitingCount: 7.0 },
-      { hour: "13:00", waitingCount: 1.0 },
-      { hour: "14:00", waitingCount: 3.0 },
-    ],
-    "2024-11": [
-      { hour: "10:00", waitingCount: 4 },
-      { hour: "11:00", waitingCount: 8.0 },
-      { hour: "12:00", waitingCount: 6.0 },
-      { hour: "13:00", waitingCount: 1.0 },
-      { hour: "14:00", waitingCount: 3.0 },
-    ],
+  const fetchMonthlyData = async (month) => {
+    try {
+      const visitUrl = `/store/${storeId}/analysis/monthly-hourly-visit-counts`;
+      const waitingUrl = `/store/${storeId}/analysis/monthly-hourly-average-waiting-counts`;
+      const visitResponse = await getData(visitUrl, token);
+      const waitingResponse = await getData(waitingUrl, token);
+
+      setVisitData(visitResponse.data[month] || []);
+      setWaitingData(waitingResponse.data[month] || []);
+    } catch (error) {
+      console.error("월별 시간대별 데이터 불러오기 오류:", error);
+    }
   };
 
   useEffect(() => {
     if (selectedPeriod === "오늘") {
-      setVisitData(todayVisitData);
-      setWaitingData(todayWaitingData);
+      fetchTodayData();
     } else {
-      setVisitData(monthlyVisitData[selectedPeriod] || []);
-      setWaitingData(monthlyWaitingData[selectedPeriod] || []);
+      fetchMonthlyData(selectedPeriod);
     }
   }, [selectedPeriod]);
 
