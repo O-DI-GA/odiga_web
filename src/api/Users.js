@@ -1,6 +1,6 @@
 import { baseInstance, userInstance } from "./customAxios";
 import { SET_TOKEN, DELETE_TOKEN } from "../store/Auth";
-import { DELETE_STOREID } from '../store/User';
+import { DELETE_STOREID } from "../store/User";
 
 // 로그인
 export const postLogin = async (userInfo, dispatch) => {
@@ -55,6 +55,22 @@ export const getData = async (url, token, data) => {
         "Content-Type": "application/json",
       },
       data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getRequest = async (url, token) => {
+  try {
+    const response = await baseInstance({
+      method: "GET",
+      url: url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
     return response.data;
   } catch (error) {
