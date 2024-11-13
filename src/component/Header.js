@@ -24,7 +24,7 @@ export default function Header() {
     setValue(newValue);
 
     if (newValue === "analysis") {
-      navigate(`/menuinsert/${storeId}`);
+      navigate("/");
     } else if (newValue === "addShop") {
       navigate("/shopinsert");
     }
@@ -39,7 +39,7 @@ export default function Header() {
   // storeId 변경 시 리렌더링 및 탭 초기화
   React.useEffect(() => {
     if (storeId && value === "analysis") {
-      navigate(`/menuinsert/${storeId}`);
+      navigate(`/`);
     }
   }, [storeId, navigate, value]);
 

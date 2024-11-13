@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useAccessToken } from "../store/useStore";
+import { useNavigate } from "react-router-dom";
+import { useAccessToken, useStoreId } from "../store/useStore";
 import { postData } from "../api/Users";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import "../css/ReserveInsert.css";
 
 const ReserveInsert = () => {
-  const { storeId } = useParams();
+  // const { storeId } = useParams();
+
+  const storeId = useStoreId();
+
   const token = useAccessToken().accessToken;
   const navigate = useNavigate();
 
@@ -133,7 +136,7 @@ const ReserveInsert = () => {
       });
       alert("예약 시간이 성공적으로 등록되었습니다.");
       setLoading(false);
-      navigate(`/menuinsert/${storeId}`);
+      navigate(`/`);
     } catch (error) {
       console.error("예약 시간 등록 중 오류가 발생했습니다:", error);
       alert("예약 시간 등록 중 오류가 발생했습니다.");

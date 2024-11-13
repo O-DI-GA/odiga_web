@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useAccessToken } from "../store/useStore";
+import { useNavigate } from "react-router-dom";
+import { useAccessToken, useStoreId } from "../store/useStore";
 import { getData, deleteData } from "../api/Users";
 import { Button, TextField } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
@@ -8,7 +8,9 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import "../css/ReserveInfo.css";
 
 const ReserveInfo = () => {
-  const { id: storeId } = useParams();
+  // const { id: storeId } = useParams();
+  const storeId = useStoreId();
+
   const token = useAccessToken().accessToken;
   const navigate = useNavigate();
   const [reservationTimes, setReservationTimes] = useState([]);

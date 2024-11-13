@@ -1,20 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useAccessToken } from "../store/useStore";
+import { useAccessToken, useStoreId } from "../store/useStore";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { getData, updateWithFileData } from "../api/Users";
-import { useParams } from "react-router-dom";
 
 export default function UpdateStore() {
   const { accessToken: token } = useAccessToken();
-  const { id: storeId } = useParams();
+  // const { id: storeId } = useParams();
+  const storeId = useStoreId();
   const googleApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
   const [storeData, setStoreData] = useState({});
   const [images, setImages] = useState({
-    storeTitleImage: null, 
+    storeTitleImage: null,
     storeImage: null,
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -204,7 +204,9 @@ export default function UpdateStore() {
         </Form.Group>
         <Form.Group className="mb-3">
           <Row>
-            <Form.Label><b>전화번호</b></Form.Label>
+            <Form.Label>
+              <b>전화번호</b>
+            </Form.Label>
             {!isEditing ? (
               <p>{storeData.phoneNumber || "전화번호 없음"}</p>
             ) : (
@@ -218,7 +220,9 @@ export default function UpdateStore() {
         </Form.Group>
         <Form.Group className="mb-3">
           <Row>
-            <Form.Label><b>테이블 수</b></Form.Label>
+            <Form.Label>
+              <b>테이블 수</b>
+            </Form.Label>
             {!isEditing ? (
               <p>{storeData.tableCount || "테이블 수 없음"}</p>
             ) : (
@@ -234,7 +238,9 @@ export default function UpdateStore() {
         {/* 대표 사진 */}
         <Form.Group className="mb-3">
           <Row>
-            <Form.Label><b>대표 사진</b></Form.Label>
+            <Form.Label>
+              <b>대표 사진</b>
+            </Form.Label>
             <div>
               <img
                 src={storeData.storeTitleImage}
@@ -261,7 +267,9 @@ export default function UpdateStore() {
         {/* 가게 사진 */}
         <Form.Group className="mb-3">
           <Row>
-            <Form.Label><b>가게 사진</b></Form.Label>
+            <Form.Label>
+              <b>가게 사진</b>
+            </Form.Label>
             <div>
               <img
                 src={storeData.storeImage}
