@@ -162,7 +162,7 @@ const TimePeriodAnalysis = () => {
   return (
     <div className="timePeriodAnalysis">
       <div className="titleContainer">
-        <h2>시간대 별 분석</h2>
+        <h5 style={{ margin: 0 }}>시간대 별 분석</h5>
         <div className="periodContainer">
           <Button
             onClick={() => setSelectedPeriod("오늘")}
@@ -173,7 +173,7 @@ const TimePeriodAnalysis = () => {
               borderRadius: "5px",
               border: "none",
               marginRight: "10px",
-              height: "30px",
+              height: "25px",
             }}
           >
             오늘
@@ -187,7 +187,7 @@ const TimePeriodAnalysis = () => {
               color: "#000",
               padding: "10px",
               borderRadius: "5px",
-              height: "30px",
+              height: "25px",
             }}
           >
             <MenuItem value="오늘">월 선택</MenuItem>

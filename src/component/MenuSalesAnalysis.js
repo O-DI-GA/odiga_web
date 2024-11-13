@@ -70,7 +70,7 @@ const MenuSalesAnalysis = () => {
   return (
     <div className="menuSalesAnalysis">
       <div className="titleContainer">
-        <h2>메뉴 별 매출 분석</h2>
+        <h5 style={{ margin: 0 }}>메뉴 별 매출 분석</h5>
         <DateRangePicker
           startDate={startDate}
           endDate={endDate}

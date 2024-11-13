@@ -23,7 +23,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
           padding: "10px",
           borderRadius: "5px",
           border: "none",
-          height: "30px",
+          height: "25px",
         }}
       >
         기간 설정
