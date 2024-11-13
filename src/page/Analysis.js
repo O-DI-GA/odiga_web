@@ -1,7 +1,11 @@
+import MenuSalesAnalysis from "../component/MenuSalesAnalysis";
+import TimePeriodAnalysis from "../component/TimePeriodAnalysis";
+
 export default function Analysis() {
   return (
-    <div>
-      <h1> 매출 분석 </h1>
+    <div style={{ backgroundColor: "#f4f4f4", margin: "20px" }}>
+      <MenuSalesAnalysis />
+      <TimePeriodAnalysis />
     </div>
   );
 }
