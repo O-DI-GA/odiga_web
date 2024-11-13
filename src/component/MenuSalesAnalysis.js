@@ -12,6 +12,8 @@ import {
 import DateRangePicker from "./DateRangePicker";
 import { FaMedal } from "react-icons/fa";
 import "../css/MenuSalesAnalysis.css";
+import { getRequest } from "../api/Users";
+import { useStoreId, useAccessToken } from "../store/useStore";
 
 ChartJS.register(
   CategoryScale,
@@ -23,23 +25,46 @@ ChartJS.register(
 );
 
 const MenuSalesAnalysis = () => {
+  const storeId = useStoreId();
+  const tokenObject = useAccessToken();
+  const token = tokenObject.accessToken;
+
   const [menuData, setMenuData] = useState([]);
   const [startDate, setStartDate] = useState(new Date("2024-01-01"));
-  const [endDate, setEndDate] = useState(new Date("2024-01-31"));
-  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [endDate, setEndDate] = useState(new Date("2024-11-10"));
+
+  const fetchMenuSalesData = async () => {
+    if (!token || !storeId) return;
+
+    try {
+      const formattedStartDate = `${startDate
+        .toISOString()
+        .split(".")[0]
+        .slice(0, -3)}`;
+      const formattedEndDate = `${endDate
+        .toISOString()
+        .split(".")[0]
+        .slice(0, -3)}`;
+
+      const url = `/store/${storeId}/analysis/menu-sales-statistics?startDate=${formattedStartDate}&endDate=${formattedEndDate}`;
+
+      const data = await getRequest(url, token);
+      console.log("데이터", data);
+      setMenuData(data.data);
+    } catch (error) {
+      console.error(
+        "메뉴 매출 데이터를 불러오는 중 오류가 발생했습니다:",
+        error
+      );
+      if (error.response) {
+        console.error("서버 응답:", error.response.data);
+      }
+    }
+  };
 
   useEffect(() => {
-    const dummyData = [
-      { name: "메인1", totalSalesCount: 6, totalSalesAmount: 5994 },
-      { name: "메인2", totalSalesCount: 8, totalSalesAmount: 7992 },
-      { name: "메인3", totalSalesCount: 7, totalSalesAmount: 6993 },
-      { name: "사이드1", totalSalesCount: 9, totalSalesAmount: 8991 },
-      { name: "사이드2", totalSalesCount: 11, totalSalesAmount: 10989 },
-      { name: "사이드3", totalSalesCount: 9, totalSalesAmount: 8991 },
-    ];
-
-    setMenuData(dummyData);
-  }, []);
+    fetchMenuSalesData();
+  }, [startDate, endDate, token, storeId]);
 
   const chartData = {
     labels: menuData.map((item) => item.name),
