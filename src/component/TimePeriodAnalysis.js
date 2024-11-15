@@ -41,9 +41,18 @@ const TimePeriodAnalysis = () => {
       const waitingUrl = `/store/${storeId}/analysis/today-hourly-waiting-counts`;
       const visitResponse = await getData(visitUrl, token);
       const waitingResponse = await getData(waitingUrl, token);
+      console.log("오늘 방문자수:", visitResponse.data);
+      console.log("오늘 웨이팅수:", waitingResponse.data);
 
-      setVisitData(visitResponse.data);
-      setWaitingData(waitingResponse.data);
+      const sortedVisitData = visitResponse.data.sort((a, b) =>
+        a.hour.localeCompare(b.hour)
+      );
+      const sortedWaitingData = waitingResponse.data.sort((a, b) =>
+        a.hour.localeCompare(b.hour)
+      );
+
+      setVisitData(sortedVisitData);
+      setWaitingData(sortedWaitingData);
     } catch (error) {
       console.error("오늘 시간대별 데이터 불러오기 오류:", error);
     }
@@ -55,9 +64,18 @@ const TimePeriodAnalysis = () => {
       const waitingUrl = `/store/${storeId}/analysis/monthly-hourly-average-waiting-counts`;
       const visitResponse = await getData(visitUrl, token);
       const waitingResponse = await getData(waitingUrl, token);
+      const sortedVisitData = (visitResponse.data[month] || []).sort((a, b) =>
+        a.hour.localeCompare(b.hour)
+      );
+      const sortedWaitingData = (waitingResponse.data[month] || []).sort(
+        (a, b) => a.hour.localeCompare(b.hour)
+      );
 
-      setVisitData(visitResponse.data[month] || []);
-      setWaitingData(waitingResponse.data[month] || []);
+      setVisitData(sortedVisitData);
+      setWaitingData(sortedWaitingData);
+
+      console.log("월 방문자수:", visitData);
+      console.log("월 웨이팅수:", waitingData);
     } catch (error) {
       console.error("월별 시간대별 데이터 불러오기 오류:", error);
     }

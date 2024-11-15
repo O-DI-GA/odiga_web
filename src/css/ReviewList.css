@@ -1,0 +1,26 @@
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+  max-height: 394px;
+  overflow-y: auto;
+}
+
+.reviewItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.rating {
+  color: #ffa500;
+}
+
+.content {
+  margin: 5px 0;
+}
