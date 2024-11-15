@@ -20,7 +20,7 @@ export default function TodayStats() {
   const getTodayStats = async () => {
     try {
       const response = await getData(
-        `/store/${storeId}/analysis/today-hourly-visit-counts`,
+        `/store/${storeId}/analysis/today-sales-statistics`,
         token
       );
       // console.log("오늘 매출액 API  : ", response.data)
