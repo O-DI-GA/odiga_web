@@ -5,6 +5,7 @@ import "../css/ReviewAnalysis.css";
 import { getRequest } from "../api/Users";
 import { useStoreId, useAccessToken } from "../store/useStore";
 import ReactMarkdown from "react-markdown";
+import loading from "../assets/loading.gif";
 
 const ReviewAnalysis = () => {
   const storeId = useStoreId();
@@ -14,10 +15,13 @@ const ReviewAnalysis = () => {
     solution: "",
     suggestions: "",
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!storeId || !token) return;
+
+      setIsLoading(true);
 
       try {
         const url = `/store/${storeId}/analysis/review-analysis`;
@@ -41,6 +45,8 @@ const ReviewAnalysis = () => {
         });
       } catch (error) {
         console.error("리뷰 분석을 불러오는 중 오류가 발생했습니다:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -57,21 +63,30 @@ const ReviewAnalysis = () => {
         <ReviewList />
       </div>
       <div className="reviewAnalysisContainer">
-        <h6>🧐 이렇게 해보는 건 어때요?</h6>
-        <div className="reviewAnalysisBox">
-          <h5>🌟 AI가 리뷰를 요약했어요</h5>
-          <ReactMarkdown>{reviewAnalysis.summary}</ReactMarkdown>
-        </div>
+        {isLoading ? (
+          <div className="loadingContainer">
+            <img src={loading} alt="로딩 중..." />
+            <h4>AI가 리뷰를 분석중이에요! 잠시만 기다려주세요 🙌</h4>
+          </div>
+        ) : (
+          <>
+            <h6>🧐 이렇게 해보는 건 어때요?</h6>
+            <div className="reviewAnalysisBox">
+              <h5>🌟 AI가 리뷰를 요약했어요</h5>
+              <ReactMarkdown>{reviewAnalysis.summary}</ReactMarkdown>
+            </div>
 
-        <div className="reviewAnalysisBox">
-          <h5>🤖 문제 해결 방법</h5>
-          <ReactMarkdown>{reviewAnalysis.solution}</ReactMarkdown>
-        </div>
+            <div className="reviewAnalysisBox">
+              <h5>🤖 문제 해결 방법</h5>
+              <ReactMarkdown>{reviewAnalysis.solution}</ReactMarkdown>
+            </div>
 
-        <div className="reviewAnalysisBox">
-          <h5>💡 추가 제안 사항</h5>
-          <ReactMarkdown>{reviewAnalysis.suggestions}</ReactMarkdown>
-        </div>
+            <div className="reviewAnalysisBox">
+              <h5>💡 추가 제안 사항</h5>
+              <ReactMarkdown>{reviewAnalysis.suggestions}</ReactMarkdown>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

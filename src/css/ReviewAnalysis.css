@@ -22,3 +22,16 @@
   border-radius: 5px;
   padding: 20px;
 }
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  height: 300px;
+}
+
+.loadingContainer img {
+  width: 80px;
+}
