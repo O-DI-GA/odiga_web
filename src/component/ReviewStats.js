@@ -12,6 +12,8 @@ import {
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import "../css/ReviewStats.css";
+import { getRequest } from "../api/Users";
+import { useStoreId, useAccessToken } from "../store/useStore";
 
 ChartJS.register(
   CategoryScale,
@@ -23,18 +25,29 @@ ChartJS.register(
 );
 
 const ReviewStats = () => {
+  const storeId = useStoreId();
+  const token = useAccessToken().accessToken;
   const [reviewData, setReviewData] = useState({
-    averageRating: 4.2,
-    ratingCounts: { 1: 10, 2: 5, 3: 20, 4: 15, 5: 50 },
+    averageRating: 0,
+    ratingCounts: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
   });
 
   useEffect(() => {
-    const dummyData = {
-      averageRating: 4.2,
-      ratingCounts: { 1: 10, 2: 5, 3: 20, 4: 15, 5: 50 },
+    const fetchData = async () => {
+      if (!storeId || !token) return;
+
+      try {
+        const url = `/store/${storeId}/analysis/review-statistics`;
+        const response = await getRequest(url, token);
+        console.log("리뷰 통계:", response.data);
+        setReviewData(response.data);
+      } catch (error) {
+        console.error("리뷰 통계를 불러오는 중 오류가 발생했습니다:", error);
+      }
     };
-    setReviewData(dummyData);
-  }, []);
+
+    fetchData();
+  }, [storeId, token]);
 
   const maxCount = Math.max(...Object.values(reviewData.ratingCounts)) * 1.15;
 
