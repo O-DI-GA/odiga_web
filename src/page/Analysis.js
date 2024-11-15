@@ -1,11 +1,23 @@
 import MenuSalesAnalysis from "../component/MenuSalesAnalysis";
 import TimePeriodAnalysis from "../component/TimePeriodAnalysis";
+import YearlyReservationPattern from "../component/YearlyReservationPattern";
+import ReviewAnalysis from "../component/ReviewAnalysis";
 
 export default function Analysis() {
   return (
-    <div style={{ backgroundColor: "#f4f4f4", margin: "20px" }}>
+    <div
+      style={{
+        backgroundColor: "#f4f4f4",
+        margin: "20px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "30px",
+      }}
+    >
       <MenuSalesAnalysis />
       <TimePeriodAnalysis />
+      <YearlyReservationPattern />
+      <ReviewAnalysis />
     </div>
   );
 }
