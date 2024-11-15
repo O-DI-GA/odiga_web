@@ -1,21 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import "../css/ReviewList.css";
+import axios from "axios";
+import { useStoreId, useAccessToken } from "../store/useStore";
 
 const ReviewList = () => {
   const [reviews, setReviews] = useState([]);
-
-  const dummyReviews = [
-    { reviewId: 1, rating: 5, content: "리뷰1" },
-    { reviewId: 2, rating: 4, content: "리뷰2" },
-    { reviewId: 3, rating: 3, content: "리뷰3" },
-    { reviewId: 4, rating: 2, content: "리뷰4" },
-    { reviewId: 5, rating: 1, content: "리뷰5" },
-  ];
+  const storeId = useStoreId();
+  const token = useAccessToken().accessToken;
 
   useEffect(() => {
-    setReviews(dummyReviews);
-  }, []);
+    const fetchData = async () => {
+      if (!storeId || !token) return;
+
+      try {
+        const url = `http://13.125.83.255:8080/api/v1/store/${storeId}/reviews`;
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        setReviews(response.data.data);
+      } catch (error) {
+        console.error("리뷰 목록 불러오는 중 오류가 발생했습니다:", error);
+      }
+    };
+
+    fetchData();
+  }, [storeId, token]);
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
