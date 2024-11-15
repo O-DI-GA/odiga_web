@@ -22,7 +22,7 @@ export default function WeekStats() {
   return (
     <div className="weekly-stats">
       <div className="titleContainer">
-        <h5 style={{ margin: 0 }}>시간대 별 분석</h5>
+        <h5 style={{ margin: 0 }}>요일 별 분석</h5>
         <div className="periodContainer">
           <Select
             value={selectedMonth}
