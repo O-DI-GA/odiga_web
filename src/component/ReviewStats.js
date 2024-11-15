@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import "../css/ReviewStats.css";
 
 ChartJS.register(
@@ -100,10 +101,38 @@ const ReviewStats = () => {
     },
   };
 
+  const renderStars = (averageRating) => {
+    const fullStars = Math.floor(averageRating);
+    const halfStar = averageRating - fullStars >= 0.5;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        {Array(fullStars)
+          .fill()
+          .map((_, i) => (
+            <FaStar key={`full-${i}`} color="#FFC107" size={24} />
+          ))}
+        {halfStar && <FaStarHalfAlt color="#FFC107" size={24} />}{" "}
+        {Array(emptyStars)
+          .fill()
+          .map((_, i) => (
+            <FaRegStar key={`empty-${i}`} color="#FFC107" size={24} />
+          ))}
+      </div>
+    );
+  };
+
   return (
     <div className="reviewStats">
       <div className="averageRating">
-        <span>평균 평점: {reviewData.averageRating.toFixed(1)}</span>
+        {renderStars(reviewData.averageRating)}
+        <span className="averageRatingText">
+          {reviewData.averageRating.toFixed(1)}
+        </span>
+        <span className="ratingNum">
+          ({Object.values(reviewData.ratingCounts).reduce((a, b) => a + b, 0)})
+        </span>
       </div>
       <div className="ratingCounts">
         <Bar data={data} options={options} plugins={[ChartDataLabels]} />
