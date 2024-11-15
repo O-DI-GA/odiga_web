@@ -1,0 +1,18 @@
+.reviewStats {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+
+.averageRating {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.ratingCounts {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
