@@ -1,0 +1,31 @@
+.today-stats {
+  margin-bottom: 30px;
+}
+
+.today-box-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.today-box {
+  display: flex;
+  background-color: #fff;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  width: 23%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+  justify-content: space-between;
+  padding: 5px 0;
+  gap: 10px;
+}
+
+.today-box p {
+  margin-bottom: 0;
+}
+
+.today-box .value {
+  font-weight: bold;
+}

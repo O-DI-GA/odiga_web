@@ -1,0 +1,53 @@
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  height: 50px;
+}
+
+.weekly-stats {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 차트들 */
+.weekly-chart-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.weekly-chart-box {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.weekly-chart {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.weekly-text-box {
+  flex: 1 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.weekly-text-box p {
+  margin-bottom: 0;
+}
+
+.weekly-text-box p span {
+  font-weight: bold;
+  color: #ff9130;
+}
