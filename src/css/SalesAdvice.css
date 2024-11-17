@@ -1,0 +1,14 @@
+.titleView {
+  display: flex;
+  flex-direction: column;
+}
+
+.salesAdviceDate {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.analysisName {
+  font-size: 20px;
+  font-weight: bold;
+}
