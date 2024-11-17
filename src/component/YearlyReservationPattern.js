@@ -137,8 +137,11 @@ const YearlyReservationPattern = () => {
       </div>
       {selectedYearData.length > 0 ? (
         <p className="yearlyText">
-          {selectedYear} 예약 패턴을 보면, {maxMonth}월에 예약 건수가 가장 많고{" "}
-          {minMonth}월에 가장 적은 것으로 나타났어요.
+          {selectedYear} 예약 패턴을 보면,{" "}
+          <span>
+            {maxMonth}월에 예약 건수가 가장 많고 {minMonth}월에 가장 적은
+          </span>{" "}
+          것으로 나타났어요.
         </p>
       ) : (
         <p className="yearlyText">{noDataMessage}</p>

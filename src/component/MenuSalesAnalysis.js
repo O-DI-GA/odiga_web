@@ -29,9 +29,13 @@ const MenuSalesAnalysis = () => {
   const tokenObject = useAccessToken();
   const token = tokenObject.accessToken;
 
+  const today = new Date();
+  const aMonthAgo = new Date();
+  aMonthAgo.setMonth(today.getMonth() - 1);
+
   const [menuData, setMenuData] = useState([]);
-  const [startDate, setStartDate] = useState(new Date("2024-01-01"));
-  const [endDate, setEndDate] = useState(new Date("2024-11-10"));
+  const [startDate, setStartDate] = useState(new Date(aMonthAgo));
+  const [endDate, setEndDate] = useState(new Date(today));
 
   const fetchMenuSalesData = async () => {
     if (!token || !storeId) return;
@@ -133,8 +137,12 @@ const MenuSalesAnalysis = () => {
           month: "long",
           day: "numeric",
         })}
-        까지 {first?.name}가 {first?.totalSalesCount}개로 가장 인기 있었어요! 🎉
-        <br />그 뒤로는 {second?.name}과 {third?.name}이 꾸준히 선택받았어요
+        까지 <span>{first?.name}</span>이(가){" "}
+        <span>{first?.totalSalesCount}개</span>
+        로 가장 인기 있었어요! 🎉
+        <br />그 뒤로는 <span>{second?.name}</span>와(과){" "}
+        <span>{third?.name}</span>
+        이(가) 꾸준히 선택받았어요
         <br />
         다음 기간에는 또 어떤 메뉴가 인기 있을지 기대되네요! 👀
       </p>

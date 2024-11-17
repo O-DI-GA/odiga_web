@@ -232,25 +232,43 @@ const TimePeriodAnalysis = () => {
         <div className="timeTextContainer">
           <p className="timeText">
             {formatSelectedPeriod()}은{" "}
-            {maxVisitHour
-              ? `${maxVisitHour}시에 가장 많은 사람이 방문했어요!!`
-              : "방문자 데이터가 없어요😢"}
+            {maxVisitHour ? (
+              <>
+                <span>{maxVisitHour}시</span>에 가장 많은 사람이 방문했어요!!
+              </>
+            ) : (
+              "방문자 데이터가 없어요😢"
+            )}
           </p>
           <p className="timeText">
             {formatSelectedPeriod()}은{" "}
-            {maxWaitingHour
-              ? `${maxWaitingHour}시에 웨이팅을 가장 많이 했어요!!`
-              : "웨이팅 데이터가 없어요😢"}
+            {maxWaitingHour ? (
+              <>
+                <span>{maxWaitingHour}시</span>에 웨이팅을 가장 많이 했어요!!
+              </>
+            ) : (
+              "웨이팅 데이터가 없어요😢"
+            )}
           </p>
         </div>
       </div>
       <p className="timeAnalysisText">
-        웨이팅한 인원 중 {visitPercentage.toFixed(2)}%가 매장을 방문했고,{" "}
-        {(100 - visitPercentage).toFixed(2)}%는 방문하지 않았어요.
+        웨이팅한 인원 중{" "}
+        <span>{visitPercentage.toFixed(2)}%가 매장을 방문</span>했고,{" "}
+        <span>{(100 - visitPercentage).toFixed(2)}%는 방문하지 않았어요.</span>
         <br />
-        {visitPercentage >= 50
-          ? "오늘은 웨이팅 후 실제 방문 비율이 꽤 높은 편이네요! 😊"
-          : "오늘은 웨이팅 후 실제 방문 비율이 낮은 편이네요😥"}
+        오늘은 웨이팅 후 실제 방문 비율이
+        {visitPercentage >= 50 ? (
+          <>
+            {" "}
+            <span>높은</span> 편이네요! 😊
+          </>
+        ) : (
+          <>
+            {" "}
+            <span>낮은</span> 편이네요 😥
+          </>
+        )}
         <br />
         웨이팅 고객의 방문율을 유지하거나 더 높일 방법을 고민해보는 것도
         좋겠어요. 📈
