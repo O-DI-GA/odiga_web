@@ -59,11 +59,11 @@ function ShopInsert() {
       );
 
       if (postResponse.httpStatusCode === 201) {
-        alert("가게 등록 성공");
-        navigate("/shoplist");
+        alert("가게 등록에 성공했어요!");
+        navigate("/");
       }
     } catch (error) {
-      alert("가게 등록 실패...");
+      alert("가게 등록에 실패했어요...");
     }
   };
 
