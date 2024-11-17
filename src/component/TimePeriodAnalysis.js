@@ -252,7 +252,7 @@ const TimePeriodAnalysis = () => {
           </p>
         </div>
       </div>
-      <p className="timeAnalysisText">
+      {/* <p className="timeAnalysisText">
         {visitData.length > 0 || waitingData.length > 0 ? (
           <>
             웨이팅한 인원 중{" "}
@@ -284,7 +284,7 @@ const TimePeriodAnalysis = () => {
             선택한 기간에 대한 방문자 및 웨이팅 데이터를 확인해 주세요!
           </>
         )}
-      </p>
+      </p> */}
     </div>
   );
 };
