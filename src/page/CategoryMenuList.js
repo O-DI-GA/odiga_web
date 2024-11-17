@@ -50,19 +50,29 @@ export default function CategoryMenuList() {
     fetchCategoryList();
   }, [accessToken, storeId, fetchCategoryList]);
 
+  React.useEffect(() => {
+    // storeId가 변경될 때 menuList 초기화
+    setMenuList([]);
+    setSelectedCategory(null);
+    setSelectedCategoryName(null);
+  }, [storeId]);
+
   // 메뉴 불러오기
-  const fetchMenuList = async (categoryId) => {
-    try {
-      const fetchedMenuList = await getData(
-        `/${storeId}/category/${categoryId}/menu`,
-        accessToken
-      );
-      console.log("메뉴 리스트 : ", fetchedMenuList.data); // data에 접근
-      setMenuList(fetchedMenuList.data);
-    } catch (error) {
-      console.error("Error fetching menu list:", error);
-    }
-  };
+  const fetchMenuList = React.useCallback(
+    async (categoryId) => {
+      try {
+        const fetchedMenuList = await getData(
+          `/${storeId}/category/${categoryId}/menu`,
+          accessToken
+        );
+        console.log("메뉴 리스트 : ", fetchedMenuList.data); // data에 접근
+        setMenuList(fetchedMenuList.data);
+      } catch (error) {
+        console.error("Error fetching menu list:", error);
+      }
+    },
+    [accessToken, storeId]
+  );
 
   // 카테고리 선택 핸들러
   const handleCategorySelect = (category) => {
