@@ -12,14 +12,13 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useStoreId } from "../store/useStore";
 import "../css/ReserveEdit.css";
 
-const ReserveEdit = () => {
-  // const { storeId } = useParams();
-
+const ReserveEdit = ({ initialDate }) => {
   const storeId = useStoreId();
   const token = useAccessToken().accessToken;
   const navigate = useNavigate();
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  // 초기값으로 ReserveInfo에서 전달받은 initialDate 설정
+  const [selectedDate, setSelectedDate] = useState(initialDate || null);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [intervalMinutes, setIntervalMinutes] = useState(30);
@@ -93,54 +92,60 @@ const ReserveEdit = () => {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div className="reserveEdit">
         <h2 className="title">예약 시간 수정</h2>
+        <div className="reserveEditBox">
+          <div className="dateSelection">
+            <DatePicker
+              label="날짜 선택"
+              value={selectedDate}
+              onChange={(newDate) => {
+                setSelectedDate(newDate);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} className="inputField" />
+              )}
+              sx={{flex : 1}}
+            />
+          </div>
 
-        <div className="dateSelection">
-          <DatePicker
-            label="날짜 선택"
-            value={selectedDate}
-            onChange={(newDate) => {
-              setSelectedDate(newDate);
-            }}
-            renderInput={(params) => (
-              <TextField {...params} className="inputField" />
-            )}
-          />
+          <div className="timeSelection">
+            <TimePicker
+              label="시작 시간"
+              value={startTime}
+              onChange={(newStartTime) => setStartTime(newStartTime)}
+              renderInput={(params) => (
+                <TextField {...params} className="inputField" />
+              )}
+              sx={{ flex: 1 }}
+            />
+            <TimePicker
+              label="종료 시간"
+              value={endTime}
+              onChange={(newEndTime) => setEndTime(newEndTime)}
+              renderInput={(params) => (
+                <TextField {...params} className="inputField" />
+              )}
+              sx={{ flex: 1 }}
+            />
+          </div>
+
+          <div className="intervalSelection">
+            <select
+              value={intervalMinutes}
+              onChange={(e) => setIntervalMinutes(parseInt(e.target.value))}
+              className="inputField"
+            >
+              <option value={30}>30분</option>
+              <option value={60}>1시간</option>
+            </select>
+            <div style={{ flex: 1 }}>
+              <label>간격</label>
+            </div>
+          </div>
+
+          <button onClick={handleSaveChanges} className="saveButton">
+            변경 사항 저장
+          </button>
         </div>
-
-        <div className="timeSelection">
-          <TimePicker
-            label="시작 시간"
-            value={startTime}
-            onChange={(newStartTime) => setStartTime(newStartTime)}
-            renderInput={(params) => (
-              <TextField {...params} className="inputField" />
-            )}
-          />
-          <TimePicker
-            label="종료 시간"
-            value={endTime}
-            onChange={(newEndTime) => setEndTime(newEndTime)}
-            renderInput={(params) => (
-              <TextField {...params} className="inputField" />
-            )}
-          />
-        </div>
-
-        <div className="intervalSelection">
-          <select
-            value={intervalMinutes}
-            onChange={(e) => setIntervalMinutes(parseInt(e.target.value))}
-            className="inputField"
-          >
-            <option value={30}>30분</option>
-            <option value={60}>1시간</option>
-          </select>
-          <label>간격</label>
-        </div>
-
-        <button onClick={handleSaveChanges} className="saveButton">
-          변경 사항 저장
-        </button>
       </div>
     </LocalizationProvider>
   );

@@ -1,17 +1,17 @@
 .reserveEdit {
-  padding: 40px;
-  border-radius: 20px;
+  padding: 40px 0px;
+  /* border-radius: 20px;
   border: 1px solid rgb(202, 202, 202);
   box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
   margin-top: 50px;
   width: 80%;
   max-width: 600px;
-  background-color: #fff;
+  background-color: #fff; */
 }
 
 .title {
-  text-align: center;
+  text-align: left;
   font-size: 26px;
   margin-bottom: 20px;
   color: #333;
@@ -19,16 +19,18 @@
 
 .dateSelection {
   margin-bottom: 20px;
+  display: flex;
 }
 
 .timeSelection {
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   gap: 20px;
   margin-bottom: 20px;
 }
 
 .inputField {
+  flex: 1;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
@@ -36,25 +38,37 @@
 }
 
 .intervalSelection {
+  display: flex;
   margin-bottom: 20px;
+  align-items: center;
+  flex-direction: row;
+  gap: 40px;
 }
 
 .saveButton {
-  background-color: #2D9CDB;
+  flex: 1;
+  background-color: #d5e5f3;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
-  color: white;
+  color: black;
   cursor: pointer;
   margin-top: 10px;
   width: 100%;
 }
 
 .saveButton:hover {
-  background-color: #4077C9;
+  background-color: #4077c9;
 }
 
 .saveButton:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.reserveEditBox {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

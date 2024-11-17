@@ -1,28 +1,25 @@
 .reserveInsert {
-  text-align: center;
-  padding: 40px;
-  border-radius: 20px;
-  border: 1px solid rgb(202, 202, 202);
-  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  margin-top: 50px;
-  width: 80%;
-  max-width: 1000px;
-  min-width: 600px;
+  padding: 30px;
+  border-radius: 10px;
   background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .title {
+  margin-top: 30px;
   font-size: 26px;
   margin-bottom: 20px;
   color: #333;
 }
 
 .monthSelection {
+  display: flex;
   margin-bottom: 20px;
+  gap: 20px;
 }
 
 .monthSelection select {
+  flex: 1;
   padding: 10px;
   border-radius: 5px;
   font-size: 16px;
@@ -133,7 +130,7 @@
 }
 
 .reservationSubmitButton {
-  background-color: #2D9CDB;
+  background-color: #2d9cdb;
   border: none;
   border-radius: 5px;
   padding: 15px 30px;
@@ -144,10 +141,10 @@
 }
 
 .reservationSubmitButton:disabled {
-  background-color: #D5E5F3;
+  background-color: #d5e5f3;
   cursor: not-allowed;
 }
 
 .reservationSubmitButton:hover:not(:disabled) {
-  background-color: #4077C9;
+  background-color: #4077c9;
 }

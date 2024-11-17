@@ -42,7 +42,7 @@ function ShopDetail(props) {
           "매출 분석",
           "카테고리 및 메뉴 등록",
           "테이블 정보 등록",
-          "예약 정보",
+          "예약 가능 시간 정보",
           "가게 정보 수정",
         ].map((text) => (
           <ListItem key={text} disablePadding>
@@ -66,7 +66,7 @@ function ShopDetail(props) {
         return <CategoryMenuList />;
       case "테이블 정보 등록":
         return <TableSetting />;
-      case "예약 정보":
+      case "예약 가능 시간 정보":
         return <ReserveInfo />;
       case "가게 정보 수정":
         return <UpdateStore />;
