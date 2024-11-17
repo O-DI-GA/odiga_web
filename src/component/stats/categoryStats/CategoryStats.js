@@ -1,17 +1,18 @@
-// CategoryStats.js
 import React from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/ko"; // 한국어 로케일 추가
 import DateRangePicker from "../../DateRangePicker";
 import CategoryRate from "./CategoryRate";
 import CategoryMenuRete from "./CategoryMenuRate";
 import "../../../css/CategoryStats.css";
 
 export default function CategoryStats() {
-  const today = new Date();
-  const aMonthAgo = new Date();
-  aMonthAgo.setMonth(today.getMonth() - 1);
+  // 오늘 날짜와 한 달 전 날짜 설정
+  const today = dayjs().locale("ko").endOf("day"); // 오늘 날짜 (한국 시간 기준 23:59:59)
+  const aMonthAgo = today.subtract(1, "month").startOf("day"); // 한 달 전 날짜 (한국 시간 기준 00:00:00)
 
-  const [startDate, setStartDate] = React.useState(aMonthAgo);
-  const [endDate, setEndDate] = React.useState(today);
+  const [startDate, setStartDate] = React.useState(aMonthAgo.toDate());
+  const [endDate, setEndDate] = React.useState(today.toDate());
 
   const [bestCategory, setBestCategory] = React.useState("");
   const [bestMenu, setBestMenu] = React.useState({
@@ -20,9 +21,8 @@ export default function CategoryStats() {
   });
 
   const handleDateChange = (type, newDate) => {
-    console.log(`Date change - Type: ${type}, New Date: ${newDate}`); // 디버깅 코드
-    if (type === "start" && newDate) setStartDate(newDate);
-    else if (type === "end" && newDate) setEndDate(newDate);
+    if (type === "start" && newDate) setStartDate(dayjs(newDate).toDate());
+    else if (type === "end" && newDate) setEndDate(dayjs(newDate).toDate());
   };
 
   // bestCategory 설정
@@ -36,6 +36,11 @@ export default function CategoryStats() {
       category: categoryName,
       menu: menuName,
     });
+  };
+
+  // 날짜를 보기 좋은 형식으로 변환
+  const formatDate = (date) => {
+    return dayjs(date).format("YYYY년 MM월 DD일");
   };
 
   return (
@@ -67,38 +72,17 @@ export default function CategoryStats() {
       <div className="comment-text-box">
         {bestMenu && bestCategory ? (
           <p className="menuAnalysisText">
-            {startDate.toLocaleDateString("ko-KR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-            부터{" "}
-            {endDate.toLocaleDateString("ko-KR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-            까지 카테고리 중 <span>{bestCategory}</span>에서 매출이 가장{" "}
-            <span>높아요</span>!!
+            {formatDate(startDate)} 부터 {formatDate(endDate)} 까지 카테고리 중{" "}
+            <span>{bestCategory}</span>에서 매출이 가장 <span>높아요</span>!!
             <br />
             <span>{bestMenu.category}</span> 카테고리에서는{" "}
             <span>{bestMenu.menu}</span>
-             이(가) 가장 인기가 많았네요 👀
+            이(가) 가장 인기가 많았네요 👀
           </p>
         ) : (
           <p className="menuAnalysisText">
-            {startDate.toLocaleDateString("ko-KR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-            부터{" "}
-            {endDate.toLocaleDateString("ko-KR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-            까지 카테고리 별 매출 데이터가 없어요🥲
+            {formatDate(startDate)} 부터 {formatDate(endDate)} 까지 카테고리 별
+            매출 데이터가 없어요🥲
           </p>
         )}
       </div>

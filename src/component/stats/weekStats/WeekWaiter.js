@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import { useAccessToken, useStoreId } from "../../../store/useStore";
 import { getData } from "../../../api/Users";
 import { Line } from "react-chartjs-2";
@@ -54,28 +55,18 @@ const WeekWaiter = ({ month }) => {
     "Sunday",
   ];
 
-  // 날짜 범위 계산 함수
+  // 날짜 범위 계산 함수 (dayjs 사용)
   const calculateDateRange = (month) => {
     if (month) {
       const [year, mon] = month.split("-");
-      const startDate = new Date(`${year}-${mon}-01T00:00:00`);
-      const formattedStartDate = new Date(
-        startDate.getTime() - startDate.getTimezoneOffset() * 60000
-      )
-        .toISOString()
-        .slice(0, 19);
-
-      const lastDay = new Date(year, mon, 0).getDate();
-      const endDate = new Date(
-        `${year}-${mon}-${String(lastDay).padStart(2, "0")}T23:59:59`
+      const start = dayjs(`${year}-${mon}-01T00:00:00`).format(
+        "YYYY-MM-DDTHH:mm:ss"
       );
-      const formattedEndDate = new Date(
-        endDate.getTime() - endDate.getTimezoneOffset() * 60000
-      )
-        .toISOString()
-        .slice(0, 19);
-
-      return { start: formattedStartDate, end: formattedEndDate };
+      const lastDay = dayjs(`${year}-${mon}-01`)
+        .endOf("month")
+        .format("YYYY-MM-DD");
+      const end = dayjs(`${lastDay}T23:59:59`).format("YYYY-MM-DDTHH:mm:ss");
+      return { start, end };
     }
     return { start: "", end: "" };
   };
@@ -143,11 +134,11 @@ const WeekWaiter = ({ month }) => {
       <div className="weekly-text-box">
         {mostDay && mostDay.length > 0 ? (
           <p>
-            {month.split("-")[1]}월은 <span>{mostDay.join(", ")}</span>에
+            {dayjs(month).format("M")}월은 <span>{mostDay.join(", ")}</span>에
             웨이팅을 가장 많이 했어요!
           </p>
         ) : (
-          <p>{month.split("-")[1]}월은 웨이팅 데이터가 없어요😢</p>
+          <p>{dayjs(month).format("M")}월은 웨이팅 데이터가 없어요😢</p>
         )}
       </div>
     </div>
