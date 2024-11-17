@@ -46,7 +46,7 @@ export default function TableSetting() {
       const sortedTableData = fecthTableApi.data.sort(
         (a, b) => parseInt(a.tableNumber) - parseInt(b.tableNumber)
       );
-      setTableData(fecthTableApi.data);
+      setTableData(sortedTableData);
     } catch (error) {
       console.error("Error fetching table data:", error);
     }
