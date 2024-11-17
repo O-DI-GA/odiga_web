@@ -9,6 +9,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import dayjs from "dayjs";
+import "dayjs/locale/ko"; // 한국어 로캘 추가
 import DateRangePicker from "./DateRangePicker";
 import { FaMedal } from "react-icons/fa";
 import "../css/MenuSalesAnalysis.css";
@@ -29,26 +31,20 @@ const MenuSalesAnalysis = () => {
   const tokenObject = useAccessToken();
   const token = tokenObject.accessToken;
 
-  const today = new Date();
-  const aMonthAgo = new Date();
-  aMonthAgo.setMonth(today.getMonth() - 1);
+  // 오늘 날짜와 한 달 전 날짜를 한국 시간으로 설정
+  const today = dayjs().locale("ko").endOf("day"); // 오늘 날짜, 한국 시간 기준 23:59:59
+  const aMonthAgo = today.subtract(1, "month").startOf("day"); // 한 달 전 날짜, 23:59:59
 
   const [menuData, setMenuData] = useState([]);
-  const [startDate, setStartDate] = useState(new Date(aMonthAgo));
-  const [endDate, setEndDate] = useState(new Date(today));
+  const [startDate, setStartDate] = useState(aMonthAgo.toDate());
+  const [endDate, setEndDate] = useState(today.toDate());
 
   const fetchMenuSalesData = async () => {
     if (!token || !storeId) return;
 
     try {
-      const formattedStartDate = `${startDate
-        .toISOString()
-        .split(".")[0]
-        .slice(0, -3)}`;
-      const formattedEndDate = `${endDate
-        .toISOString()
-        .split(".")[0]
-        .slice(0, -3)}`;
+      const formattedStartDate = dayjs(startDate).format("YYYY-MM-DDTHH:mm:ss");
+      const formattedEndDate = dayjs(endDate).format("YYYY-MM-DDTHH:mm:ss");
 
       const url = `/store/${storeId}/analysis/menu-sales-statistics?startDate=${formattedStartDate}&endDate=${formattedEndDate}`;
 
@@ -141,18 +137,9 @@ const MenuSalesAnalysis = () => {
       <p className="menuAnalysisText">
         {menuData.length > 0 ? (
           <>
-            {startDate.toLocaleDateString("ko-KR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-            부터{" "}
-            {endDate.toLocaleDateString("ko-KR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-            까지 <span>{first?.name}</span>이(가){" "}
+            {dayjs(startDate).format("YYYY년 MM월 DD일")} 부터{" "}
+            {dayjs(endDate).format("YYYY년 MM월 DD일")} 까지{" "}
+            <span>{first?.name}</span>이(가){" "}
             <span>{first?.totalSalesCount}개</span>
             로 가장 인기 있었어요! 🎉
             <br />그 뒤로는 <span>{second?.name}</span>와(과){" "}
@@ -163,18 +150,9 @@ const MenuSalesAnalysis = () => {
           </>
         ) : (
           <p style={{ margin: 0 }}>
-            {startDate.toLocaleDateString("ko-KR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-            부터{" "}
-            {endDate.toLocaleDateString("ko-KR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-            까지 매출 데이터가 없어요 🥲
+            {dayjs(startDate).format("YYYY년 MM월 DD일")} 부터{" "}
+            {dayjs(endDate).format("YYYY년 MM월 DD일")} 까지 매출 데이터가
+            없어요 🥲
           </p>
         )}
       </p>
