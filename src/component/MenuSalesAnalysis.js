@@ -29,9 +29,13 @@ const MenuSalesAnalysis = () => {
   const tokenObject = useAccessToken();
   const token = tokenObject.accessToken;
 
+  const today = new Date();
+  const aMonthAgo = new Date();
+  aMonthAgo.setMonth(today.getMonth() - 1);
+
   const [menuData, setMenuData] = useState([]);
-  const [startDate, setStartDate] = useState(new Date("2024-01-01"));
-  const [endDate, setEndDate] = useState(new Date("2024-11-10"));
+  const [startDate, setStartDate] = useState(new Date(aMonthAgo));
+  const [endDate, setEndDate] = useState(new Date(today));
 
   const fetchMenuSalesData = async () => {
     if (!token || !storeId) return;
