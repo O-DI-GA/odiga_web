@@ -52,12 +52,30 @@ const ReviewList = () => {
 
   return (
     <div className="reviewList" style={{ height: "100%" }}>
-      {reviews.map((review) => (
-        <div key={review.reviewId} className="reviewItem">
-          <div className="rating">{renderStars(review.rating)}</div>
-          <p className="content">{review.content}</p>
+      {reviews.length > 0 ? (
+        reviews.map((review) => (
+          <div key={review.reviewId} className="reviewItem">
+            <div className="rating">{renderStars(review.rating)}</div>
+            <p className="content">{review.content}</p>
+          </div>
+        ))
+      ) : (
+        <div
+          className="reviewItem"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            height: "394px",
+          }}
+        >
+          <p>
+            아직 고객 리뷰가 등록되지 않았습니다.
+            <br />
+            리뷰가 작성되면 이곳에 표시됩니다. 😊
+          </p>
         </div>
-      ))}
+      )}
     </div>
   );
 };

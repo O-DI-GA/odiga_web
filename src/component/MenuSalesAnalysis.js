@@ -112,39 +112,71 @@ const MenuSalesAnalysis = () => {
         </div>
         <div className="menuRank">
           <h4>매출 Top 3</h4>
-          <ul>
-            {top3Menus.map((item, index) => (
-              <li key={item.name}>
-                <FaMedal className={`medal-${index + 1}`} />
-                <span className="menuName">{item.name}</span>
-                <span className="salesAmount">
-                  {item.totalSalesAmount.toLocaleString()}원
-                </span>
-              </li>
-            ))}
-          </ul>
+          {top3Menus.length > 0 ? (
+            <ul>
+              {top3Menus.map((item, index) => (
+                <li key={item.name}>
+                  <FaMedal className={`medal-${index + 1}`} />
+                  <span className="menuName">{item.name}</span>
+                  <span className="salesAmount">
+                    {item.totalSalesAmount.toLocaleString()}원
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "80%",
+              }}
+            >
+              매출 데이터가 없습니다.
+            </p>
+          )}
         </div>
       </div>
       <p className="menuAnalysisText">
-        {startDate.toLocaleDateString("ko-KR", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-        부터{" "}
-        {endDate.toLocaleDateString("ko-KR", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-        까지 <span>{first?.name}</span>이(가){" "}
-        <span>{first?.totalSalesCount}개</span>
-        로 가장 인기 있었어요! 🎉
-        <br />그 뒤로는 <span>{second?.name}</span>와(과){" "}
-        <span>{third?.name}</span>
-        이(가) 꾸준히 선택받았어요
-        <br />
-        다음 기간에는 또 어떤 메뉴가 인기 있을지 기대되네요! 👀
+        {menuData.length > 0 ? (
+          <>
+            {startDate.toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+            부터{" "}
+            {endDate.toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+            까지 <span>{first?.name}</span>이(가){" "}
+            <span>{first?.totalSalesCount}개</span>
+            로 가장 인기 있었어요! 🎉
+            <br />그 뒤로는 <span>{second?.name}</span>와(과){" "}
+            <span>{third?.name}</span>
+            이(가) 꾸준히 선택받았어요
+            <br />
+            다음 기간에는 또 어떤 메뉴가 인기 있을지 기대되네요! 👀
+          </>
+        ) : (
+          <p style={{ margin: 0 }}>
+            {startDate.toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+            부터{" "}
+            {endDate.toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+            까지 매출 데이터가 없어요 🥲
+          </p>
+        )}
       </p>
     </div>
   );

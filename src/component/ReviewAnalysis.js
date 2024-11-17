@@ -68,24 +68,39 @@ const ReviewAnalysis = () => {
             <img src={loading} alt="로딩 중..." />
             <h4>AI가 리뷰를 분석중이에요! 잠시만 기다려주세요 🙌</h4>
           </div>
-        ) : (
+        ) : reviewAnalysis.summary ||
+          reviewAnalysis.solution ||
+          reviewAnalysis.suggestions ? (
           <>
             <h6>🧐 이렇게 해보는 건 어때요?</h6>
             <div className="reviewAnalysisBox">
               <h5>🌟 AI가 리뷰를 요약했어요</h5>
-              <ReactMarkdown>{reviewAnalysis.summary}</ReactMarkdown>
+              <ReactMarkdown>
+                {reviewAnalysis.summary || "리뷰 요약 데이터가 없습니다."}
+              </ReactMarkdown>
             </div>
 
             <div className="reviewAnalysisBox">
               <h5>🤖 문제 해결 방법</h5>
-              <ReactMarkdown>{reviewAnalysis.solution}</ReactMarkdown>
+              <ReactMarkdown>
+                {reviewAnalysis.solution || "문제 해결 방법 데이터가 없습니다."}
+              </ReactMarkdown>
             </div>
 
             <div className="reviewAnalysisBox">
               <h5>💡 추가 제안 사항</h5>
-              <ReactMarkdown>{reviewAnalysis.suggestions}</ReactMarkdown>
+              <ReactMarkdown>
+                {reviewAnalysis.suggestions || "추가 제안 데이터가 없습니다."}
+              </ReactMarkdown>
             </div>
           </>
+        ) : (
+          <div className="reviewAnalysisBox">
+            <p style={{ margin: 0 }}>
+              분석할 리뷰 데이터가 없어요. 😢 <br />
+              새로운 리뷰가 등록되거나 데이터가 업데이트되면 다시 시도해주세요.
+            </p>
+          </div>
         )}
       </div>
     </div>
