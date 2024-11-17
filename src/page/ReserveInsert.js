@@ -146,9 +146,8 @@ const ReserveInsert = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <p className="title">예약 시간 등록</p>
       <div className="reserveInsert">
-        <h2 className="title">예약 시간 등록</h2>
-
         <div className="monthSelection">
           <select
             value={year}

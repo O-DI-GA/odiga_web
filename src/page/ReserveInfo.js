@@ -7,17 +7,22 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import "../css/ReserveInfo.css";
 
+import ReserveInsert from "./ReserveInsert";
+import ReserveEdit from "./ReserveEdit";
+
 const ReserveInfo = () => {
-  // const { id: storeId } = useParams();
   const storeId = useStoreId();
 
   const token = useAccessToken().accessToken;
   const navigate = useNavigate();
   const [reservationTimes, setReservationTimes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date()); // 기본값: 오늘 날짜
   const [filteredTimes, setFilteredTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState(null);
+
+  const [showInsert, setShowInsert] = useState(false); // ReserveInsert 표시 여부
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     const fetchReservationTimes = async () => {
@@ -57,14 +62,6 @@ const ReserveInfo = () => {
     return `${hours}:${minutes}`;
   };
 
-  const handleReserveInsert = () => {
-    navigate(`/reserveinsert/${storeId}`);
-  };
-
-  const handleEdit = (timeId) => {
-    navigate(`/reserveedit/${storeId}`);
-  };
-
   const handleDelete = async () => {
     if (!selectedTime) return;
 
@@ -84,6 +81,16 @@ const ReserveInfo = () => {
     }
   };
 
+  const toggleInsert = () => {
+    setShowInsert((prev) => !prev);
+    setShowEdit(false); // 다른 화면은 닫기
+  };
+
+  const toggleEdit = () => {
+    setShowEdit((prev) => !prev);
+    setShowInsert(false); // 다른 화면은 닫기
+  };
+
   if (loading) {
     return <div>로딩 중...</div>;
   }
@@ -91,60 +98,90 @@ const ReserveInfo = () => {
   return (
     <div>
       <div className="reserveInfoTitle">
-        <h2>예약 가능 시간</h2>
-        <div>
-          <button onClick={handleReserveInsert} className="reserveInsertButton">
-            등록
+        <p>예약 가능 시간</p>
+      </div>
+      <div className="reserveInfoTitleBox">
+        <div className="reserveInfoSection">
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="날짜 선택"
+              value={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+          {selectedTime && (
+            <Button
+              variant="contained"
+              color="error"
+              onClick={handleDelete}
+              className="deleteButton"
+            >
+              선택한 시간 삭제
+            </Button>
+          )}
+        </div>
+
+        <div className="timeContainer">
+          {filteredTimes
+            .slice()
+            .sort(
+              (a, b) =>
+                new Date(a.availableReservationTime).getTime() -
+                new Date(b.availableReservationTime).getTime()
+            )
+            .map((time) => (
+              <Button
+                key={time.availableReservationTimeId}
+                variant="outlined"
+                onClick={() => setSelectedTime(time.availableReservationTimeId)}
+                className={
+                  selectedTime === time.availableReservationTimeId
+                    ? "selectedTimeButton"
+                    : ""
+                }
+              >
+                {formatTime(time.availableReservationTime)}
+              </Button>
+            ))}
+        </div>
+        <div className="reserveInsertContainer">
+          <button
+            onClick={toggleEdit}
+            className="reserveEditButton"
+            style={{
+              backgroundColor: showEdit ? "#4077c9" : "#d5e5f3",
+              color: showEdit ? "#fff" : "initial",
+            }}
+          >
+            수정하기
           </button>
-          <button onClick={handleEdit} className="reserveEditButton">
-            수정
+          <button
+            onClick={toggleInsert}
+            className="reserveInsertButton"
+            style={{
+              backgroundColor: showInsert ? "#4077c9" : "#d5e5f3",
+              color: showInsert ? "#fff" : "initial",
+            }}
+          >
+            새로운 시간 등록하기
           </button>
         </div>
       </div>
-      <div className="reserveInfoSection">
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            label="날짜 선택"
-            value={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>
-        {selectedTime && (
-          <Button
-            variant="contained"
-            color="error"
-            onClick={handleDelete}
-            className="deleteButton"
-          >
-            선택한 시간 삭제
-          </Button>
-        )}
-      </div>
 
-      <div className="timeContainer">
-        {filteredTimes
-          .slice()
-          .sort(
-            (a, b) =>
-              new Date(a.availableReservationTime).getTime() -
-              new Date(b.availableReservationTime).getTime()
-          )
-          .map((time) => (
-            <Button
-              key={time.availableReservationTimeId}
-              variant="outlined"
-              onClick={() => setSelectedTime(time.availableReservationTimeId)}
-              className={
-                selectedTime === time.availableReservationTimeId
-                  ? "selectedTimeButton"
-                  : ""
-              }
-            >
-              {formatTime(time.availableReservationTime)}
-            </Button>
-          ))}
-      </div>
+      {/* ReserveInsert 컴포넌트 */}
+      {showInsert && (
+        <div className="reserveInsertSection">
+          <ReserveInsert />
+        </div>
+      )}
+
+      {/* ReserveEdit 컴포넌트 */}
+      {showEdit && (
+        <div className="reserveEditSection">
+          <ReserveEdit initialDate={selectedDate} />
+        </div>
+      )}
     </div>
   );
 };

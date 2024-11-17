@@ -59,7 +59,7 @@ export default function Header() {
                 },
               }}
             >
-              <Tab value="analysis" label="매출 분석" />
+              <Tab value="analysis" label="가게 관리" />
               <Tab value="addShop" label="가게 등록" />
             </Tabs>
           </Box>
