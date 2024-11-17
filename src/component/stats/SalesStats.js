@@ -69,15 +69,35 @@ const SalesStats = ({ startDate, endDate }) => {
         </div>
       ) : (
         <>
-          <div className="reviewAnalysisBox">
-            <p className="analysisName">전체 매출 평가</p>
-            <ReactMarkdown>{salesAnalysis.evaluation}</ReactMarkdown>
-          </div>
+          {salesAnalysis.evaluation || salesAnalysis.advice ? (
+            <>
+              <div className="reviewAnalysisBox">
+                <p className="analysisName">전체 매출 평가</p>
+                {salesAnalysis.evaluation ? (
+                  <ReactMarkdown>{salesAnalysis.evaluation}</ReactMarkdown>
+                ) : (
+                  <p className="noDataText">매출 데이터가 없습니다.</p>
+                )}
+              </div>
 
-          <div className="reviewAnalysisBox">
-            <p className="analysisName">매출에 대한 조언</p>
-            <ReactMarkdown>{salesAnalysis.advice}</ReactMarkdown>
-          </div>
+              <div className="reviewAnalysisBox">
+                <p className="analysisName">매출에 대한 조언</p>
+                {salesAnalysis.advice ? (
+                  <ReactMarkdown>{salesAnalysis.advice}</ReactMarkdown>
+                ) : (
+                  <p className="noDataText">매출 데이터가 없습니다.</p>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="reviewAnalysisBox">
+              <p style={{ margin: 0 }}>
+                선택된 기간 동안의 매출 데이터가 없어요.
+                <br />
+                기간을 다시 설정하거나 데이터가 있는지 확인해 주세요! 😊
+              </p>
+            </div>
+          )}
         </>
       )}
     </div>

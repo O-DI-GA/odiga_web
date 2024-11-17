@@ -253,25 +253,37 @@ const TimePeriodAnalysis = () => {
         </div>
       </div>
       <p className="timeAnalysisText">
-        웨이팅한 인원 중{" "}
-        <span>{visitPercentage.toFixed(2)}%가 매장을 방문</span>했고,{" "}
-        <span>{(100 - visitPercentage).toFixed(2)}%는 방문하지 않았어요.</span>
-        <br />
-        오늘은 웨이팅 후 실제 방문 비율이
-        {visitPercentage >= 50 ? (
+        {visitData.length > 0 || waitingData.length > 0 ? (
           <>
-            {" "}
-            <span>높은</span> 편이네요! 😊
+            웨이팅한 인원 중{" "}
+            <span>{visitPercentage.toFixed(2)}%가 매장을 방문</span>했고,{" "}
+            <span>
+              {(100 - visitPercentage).toFixed(2)}%는 방문하지 않았어요.
+            </span>
+            <br />
+            오늘은 웨이팅 후 실제 방문 비율이
+            {visitPercentage >= 50 ? (
+              <>
+                {" "}
+                <span>높은</span> 편이네요! 😊
+              </>
+            ) : (
+              <>
+                {" "}
+                <span>낮은</span> 편이네요 😥
+              </>
+            )}
+            <br />
+            웨이팅 고객의 방문율을 유지하거나 더 높일 방법을 고민해보는 것도
+            좋겠어요. 📈
           </>
         ) : (
           <>
-            {" "}
-            <span>낮은</span> 편이네요 😥
+            분석할 데이터가 없어요. 😢
+            <br />
+            선택한 기간에 대한 방문자 및 웨이팅 데이터를 확인해 주세요!
           </>
         )}
-        <br />
-        웨이팅 고객의 방문율을 유지하거나 더 높일 방법을 고민해보는 것도
-        좋겠어요. 📈
       </p>
     </div>
   );
