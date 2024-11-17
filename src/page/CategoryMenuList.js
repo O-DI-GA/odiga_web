@@ -397,9 +397,6 @@ export default function CategoryMenuList() {
                     <Card.Title>{menu.menuName}</Card.Title>
                     <Card.Text>가격: {menu.price} 원</Card.Text>
                     <Card.Text>{menu.caption}</Card.Text>
-                    <Button variant="primary" style={{ marginLeft: "9.3rem" }}>
-                      편집
-                    </Button>
                   </Card.Body>
                 </Card>
               </Col>
