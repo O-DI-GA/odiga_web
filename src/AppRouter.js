@@ -1,7 +1,6 @@
 // AppRoutes.js
 import React from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import Home from "./page/Home";
 import ShopInsert from "./page/ShopInsert";
 import Login from "./page/auth/Login";
 import ShopList from "./page/ShopList";

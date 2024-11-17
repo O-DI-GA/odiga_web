@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../css/ShopList.css";
-import { URL } from "../App.js";
 import { useAccessToken } from "../store/useStore.js";
 import { useNavigate } from "react-router-dom";
 import { getData } from "../api/Users.js";
@@ -17,7 +16,7 @@ const ShopList = () => {
   useEffect(() => {
     const fetchShops = async () => {
       try {
-        const response = await getData('/store', token);
+        const response = await getData("/store", token);
         if (response.httpStatusCode === 200) {
           setShops(response.data); // 성공 시 데이터 설정
         } else {
