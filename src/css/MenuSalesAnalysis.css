@@ -79,3 +79,8 @@
   padding: 20px;
   font-size: large;
 }
+
+.menuAnalysisText span {
+  font-weight: bold;
+  color: #ff9130;
+}
